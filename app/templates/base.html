@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {%- if title %}
+    <title>{{ title }} - snippets</title>
+    {%- else %}
+    <title>snippets</title>
+    {%- endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap.min.css") }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap-theme.min.css") }}" type="text/css" />
+  </head>
+  <body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('new_snippet') }}">New Snippet</a></li>
+          </ul>
+          <form role="search" class="navbar-form navbar-right" action="{{url_for('search')}}" method="post" name="search">
+            <div class="form-group">
+              {{g.search_form.hidden_tag()}}
+              <div class="input-group">
+                {{g.search_form.query(size=40, class="form-control")}}
+                <span class="input-group-btn" type="button">
+                  <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+      {%- for msg_type, msg in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-dismissible {{ msg_type }}" role="alert">
+          <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <span>{{ msg }}</span>
+        </div>
+      {%- endfor %}
+      {%- block content %}{%- endblock %}
+      </div>
+    </div>
+  </div>
+
+  <!-- JS last to speed up loading -->
+  <script src="{{ url_for('static', filename="js/jquery.min.js") }}"></script>
+  <script src="{{ url_for('static', filename="js/bootstrap.min.js") }}"></script>
+  </body>
+</html>

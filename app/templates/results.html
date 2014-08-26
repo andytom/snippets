@@ -1,0 +1,22 @@
+{%- extends "base.html" %}
+{%- block content %}
+{%- if results %}
+  {%- if query %}
+  <h4>Results for query <strong>{{ query }}</strong></h4>
+  {%- else %}
+  <h4>5 newest snippets</h4>
+  {%- endif %}
+  {%- for snippet in results %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a href='{{ url_for('get_snippet', id=snippet.id) }}'>{{ snippet.title }}</a>
+    </div>
+    <div class="panel-body">
+      {{ snippet.text | truncate(250, False) | markdown }}
+    </div>
+  </div>
+  {%- endfor %}
+{%- else %}
+  <h4>No results for query <strong>{{ query }}</strong></h4>
+{%- endif %}
+{%- endblock %}

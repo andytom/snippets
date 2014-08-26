@@ -1,0 +1,7 @@
+DEBUG = False
+SECRET_KEY = ''  # Fixme
+
+# Connection details for the Database
+SQLALCHEMY_DATABASE_URI = ''
+# Full path to where should the Whoosh indexes be stored
+WHOOSH_BASE = ''
