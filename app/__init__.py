@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, g, flash
 from flask.ext.sqlalchemy import SQLAlchemy
-from flaskext.markdown import Markdown
+from flask.ext.misaka import Misaka
 import flask.ext.whooshalchemy
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField
@@ -9,7 +9,14 @@ from wtforms.validators import DataRequired
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 db = SQLAlchemy(app)
-Markdown(app)
+
+Misaka(app,
+       fenced_code=True,
+       no_intra_emphasis=True,
+       strikethrough=True,
+       superscript=True,
+       escape=True,
+)
 
 
 #-----------------------------------------------------------------------------#
