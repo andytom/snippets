@@ -24,7 +24,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 {%- if back %}
-  <a href="{{ back }}"><button type="button" class="btn btn-default">Back</button></a>
+  <a href="{{ request.referrer }}"><button type="button" class="btn btn-default">Back</button></a>
 {% endif -%}
 </form>
 {%- endblock %}

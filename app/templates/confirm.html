@@ -12,7 +12,7 @@
 <form role="form" method="post">
   {{ form.hidden_tag() }}
   <button type="submit" class="{{ yes_btn_class }}">Yes</button>
-  <a href="{{ back }}"><button type="button" class="{{ no_btn_class }}">No</button></a>
+  <a href="{{ request.referrer}}"><button type="button" class="{{ no_btn_class }}">No</button></a>
 </form>
 {%- endblock %}
 

@@ -109,7 +109,7 @@ def search():
     return redirect(url_for('index'))
 
 
-@app.route('/snippet/<id>')
+@app.route('/snippet/<int:id>')
 def get_snippet(id):
     snippet = Snippet.query.get_or_404(id)
     return render_template('snippet.html', snippet=snippet)
@@ -128,8 +128,7 @@ def delete_snippet(id):
     return render_template('confirm.html',
                            form=form,
                            destructive=True,
-                           question=question.format(snippet.title),
-                           back=url_for('get_snippet', id=snippet.id))
+                           question=question.format(snippet.title))
 
 
 @app.route('/snippet/<id>/edit', methods=['GET', 'POST'])
@@ -146,5 +145,4 @@ def edit_snippet(id):
         return redirect(url_for('get_snippet', id=snippet.id))
     form.title.data = snippet.title
     form.text.data = snippet.text
-    return render_template('edit_snippet.html', form=form,
-                           back=url_for('get_snippet', id=snippet.id))
+    return render_template('edit_snippet.html', form=form)
