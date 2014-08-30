@@ -17,6 +17,10 @@
   </div>
   {%- endfor %}
 {%- else %}
+  {%- if query %}
   <h4>No results for query <strong>{{ query }}</strong></h4>
+  {%- else %}
+  <h4>There are no snippets why don't you <a href='{{ url_for('new_snippet') }}'>create one</a></h4>
+  {%- endif %}
 {%- endif %}
 {%- endblock %}

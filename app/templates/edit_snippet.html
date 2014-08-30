@@ -7,24 +7,22 @@
     {{ form.title(id="title", class="form-control")}}
     {%- if form.title.errors %}
     <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-    {% for error in form.text.errors %}
+    {%- for error in form.text.errors %}
     <span class="help-block">{{ error }}</span>
-    {% endfor %}
-    {% endif -%}
+    {%- endfor %}
+    {%- endif %}
   </div>
   <div class="form-group has-feedback{%- if form.text.errors %} has-error{% endif %}">
     <label class="control-label" for="text">Text</label>
     {{ form.text(id="text",rows=10, class="form-control")}}
     {%- if form.text.errors %}
     <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-    {% for error in form.text.errors %}
+    {%- for error in form.text.errors %}
     <span class="help-block">{{ error }}</span>
-    {% endfor %}
-    {% endif -%}
+    {%- endfor %}
+    {%- endif %}
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
-{%- if back %}
   <a href="{{ request.referrer }}"><button type="button" class="btn btn-default">Back</button></a>
-{% endif -%}
 </form>
 {%- endblock %}
