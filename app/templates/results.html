@@ -4,7 +4,7 @@
   {%- if query %}
   <h4>Results for query <strong>{{ query }}</strong></h4>
   {%- else %}
-  <h4>{{ results| length }} newest snippets</h4>
+  <h4>{{ results | length }} newest snippets</h4>
   {%- endif %}
   {%- for snippet in results %}
   <div class="panel panel-default">
