@@ -1,7 +1,15 @@
 DEBUG = False
-SECRET_KEY = ''  # Fixme
+# For more info see the flask documentation on sessions
+# http://flask.pocoo.org/docs/0.10/quickstart/#sessions
+# You can generate a secure key using the following code
+# >>> import os
+# >>> os.urandom(24)
+SECRET_KEY = ''
 
 # Connection details for the Database
+# See the Flask-SQLAlchemy docs
+# https://pythonhosted.org/Flask-SQLAlchemy/config.html#connection-uri-format
 SQLALCHEMY_DATABASE_URI = ''
+
 # Full path to where should the Whoosh indexes be stored
 WHOOSH_BASE = ''
