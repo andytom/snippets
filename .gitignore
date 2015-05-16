@@ -1,4 +1,3 @@
 *.pyc
 *.db
-snippet_index/Snippet
-app/config.py
+app/snippet_index/*
