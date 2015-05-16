@@ -34,3 +34,6 @@ class BaseTestCase(unittest.TestCase):
     def test_405_on_get_search(self):
         rv = self.app.get('/search')
         self.assertEqual(rv.status_code, 405)
+
+if __name__ == '__main__':
+    unittest.main()
