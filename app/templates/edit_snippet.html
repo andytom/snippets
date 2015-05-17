@@ -14,7 +14,7 @@
   </div>
   <div class="form-group has-feedback{%- if form.text.errors %} has-error{% endif %}">
     <label class="control-label" for="text">Text</label>
-    {{ form.text(id="text",rows=10, class="form-control")}}
+    {{ form.text(id="text", rows=10, class="form-control")}}
     {%- if form.text.errors %}
     <span class="glyphicon glyphicon-remove form-control-feedback"></span>
     {%- for error in form.text.errors %}
