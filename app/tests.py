@@ -5,9 +5,7 @@ from app import app, db
 
 class BaseTestCase(unittest.TestCase):
     def setUp(self):
-        app.config['TESTING'] = True
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
-        app.config['WTF_CSRF_ENABLED'] = False
+        app.config.from_object('config.TestConfig')
         self.app = app.test_client()
         db.create_all()
 
@@ -35,6 +33,3 @@ class BaseTestCase(unittest.TestCase):
     def test_405_on_get_search(self):
         rv = self.app.get('/search')
         self.assertEqual(rv.status_code, 405)
-
-if __name__ == '__main__':
-    unittest.main()

@@ -7,7 +7,7 @@ from app import app
 manager = Manager(app)
 
 
-server = Server(host='0.0.0.0')
+server = Server(host='0.0.0.0', use_debugger=True)
 manager.add_command("runserver", server)
 
 

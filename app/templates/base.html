@@ -8,6 +8,7 @@
     {%- endif %}
     <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap.min.css") }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap-theme.min.css") }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/highlight-default.min.css") }}" type="text/css" />
   </head>
   <body>
   <!-- Navbar -->
@@ -58,5 +59,8 @@
   <!-- JS last to speed up loading -->
   <script src="{{ url_for('static', filename="js/jquery.min.js") }}"></script>
   <script src="{{ url_for('static', filename="js/bootstrap.min.js") }}"></script>
+  <script src="{{ url_for('static', filename="js/highlight.min.js") }}"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
   </body>
 </html>
