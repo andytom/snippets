@@ -10,6 +10,6 @@ TODO
  - [ ] Deployment instructions
  - [ ] Add a Licence
 - [ ] Write more tests
-- [ ] Syntax highlighing
+- [x] Syntax highlighing
 - [ ] Manage commands for the database
 - [ ] Manage commands for the index
