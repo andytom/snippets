@@ -16,7 +16,7 @@ Misaka(app,
        strikethrough=True,
        superscript=True,
        escape=True,
-)
+       )
 
 
 #-----------------------------------------------------------------------------#
