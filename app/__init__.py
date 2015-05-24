@@ -147,4 +147,4 @@ def edit_snippet(id):
         return redirect(url_for('get_snippet', id=snippet.id))
     form.title.data = snippet.title
     form.text.data = snippet.text
-    return render_template('edit_snippet.html', form=form)
+    return render_template('edit_snippet.html', form=form, snippet=snippet)
