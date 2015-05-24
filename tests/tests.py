@@ -1,5 +1,6 @@
 from base import BaseTestCase
 
+
 class SimpleTestCase(BaseTestCase):
     def test_index(self):
         rv = self.app.get('/')
