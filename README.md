@@ -7,6 +7,7 @@ Snippets
 TODO
 ----
 - [ ] Write a README
+ - [ ] General Overview
  - [ ] Deployment instructions
  - [ ] Add a Licence
 - [ ] Add Doc strings
@@ -15,7 +16,8 @@ TODO
 - [ ] Manage commands for the database
 - [ ] Manage commands for the index
 - [ ] Add users and permissions
- - [ ] Add users
+ - [ ] Add user registration, login, log out
  - [ ] Must be logged in to create
  - [ ] Only user or admin can delete or edit
- - [ ] Sahred/not shared snippets?
+ - [ ] Shared/not shared snippets?
+ - [ ] Manage commands/Admin Page for Users
