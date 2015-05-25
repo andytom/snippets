@@ -21,3 +21,5 @@ TODO
  - [ ] Only user or admin can delete or edit
  - [ ] Shared/not shared snippets?
  - [ ] Manage commands/Admin Page for Users
+- [ ] Add a help page?
+ - [ ] What Markdown is supported
