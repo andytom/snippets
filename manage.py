@@ -15,8 +15,8 @@ manager.add_command("runserver", server)
 def test():
     """Runs all the tests"""
     parent_dir = os.path.dirname(os.path.abspath(__file__))
-    app_dir = os.path.join(parent_dir, 'app')
-    tests = unittest.TestLoader().discover(app_dir)
+    test_dir = os.path.join(parent_dir, 'tests')
+    tests = unittest.TestLoader().discover(test_dir)
     results = unittest.TextTestRunner(verbosity=2).run(tests)
 
 
