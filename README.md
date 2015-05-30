@@ -9,7 +9,7 @@ TODO
 - [ ] Write a README
  - [ ] General Overview
  - [ ] Deployment instructions
- - [ ] Add a Licence
+ - [x] Add a Licence
 - [ ] Add Doc strings
 - [ ] Write more tests
 - [x] Syntax highlighing
