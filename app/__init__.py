@@ -37,7 +37,7 @@ class Snippet(db.Model):
         self.text = text
 
     def __repr__(self):
-        return 'Snippet({0} - {1})'.format(self.title, self.text)
+        return 'Snippet({0} - {1})'.format(self.id, self.title)
 
 
 # Make the model searchable
