@@ -2,10 +2,11 @@ import os
 from flask import Flask, request, render_template, redirect, url_for, g, flash
 from flask.ext.misaka import Misaka
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.elasticsearch import FlaskElasticsearch
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired
-import flask.ext.whooshalchemy
+from sqlalchemy import event
 
 
 #-----------------------------------------------------------------------------#
@@ -16,6 +17,7 @@ app.config.from_object(os.environ.get('APP_SETTINGS',
                                       'config.DevelopmentConfig'))
 
 db = SQLAlchemy(app)
+es = FlaskElasticsearch(app)
 
 Misaka(app, fenced_code=True, intra_emphasis=False, strikethrough=True,
        superscript=True, escape=True)
@@ -26,7 +28,8 @@ Misaka(app, fenced_code=True, intra_emphasis=False, strikethrough=True,
 #-----------------------------------------------------------------------------#
 class Snippet(db.Model):
     __tablename__ = 'snippet'
-    __searchable__ = ['title', 'text']
+    __es_index__ = 'snippets'
+    __es_doc_type__ = 'snippet'
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))
@@ -39,9 +42,27 @@ class Snippet(db.Model):
     def __repr__(self):
         return 'Snippet({0} - {1})'.format(self.id, self.title)
 
+    def data(self):
+        return {'title': self.title, 'text': self.text}
 
-# Make the model searchable
-flask.ext.whooshalchemy.whoosh_index(app, Snippet)
+
+
+def index_item(mapper, connection, target):
+    es.index(index=target.__es_index__,
+             doc_type=target.__es_doc_type__,
+             body=target.data(),
+             id=target.id)
+
+
+def delete_item(mapper, connection, target):
+    es.delete(index=target.__es_index__,
+             doc_type=target.__es_doc_type__,
+             id=target.id)
+
+
+event.listen(Snippet, 'after_insert', index_item)
+event.listen(Snippet, 'after_update', index_item)
+event.listen(Snippet, 'after_delete', delete_item)
 
 
 #-----------------------------------------------------------------------------#
@@ -83,7 +104,14 @@ def index():
     query = request.args.get('q')
     if query:
         g.search_form.query.data = query
-        results = results.whoosh_search(query)
+        es_results = es.search(index=Snippet.__es_index__,
+                               doc_type=Snippet.__es_doc_type__,
+                               q=query)
+        ids = [hit['_id'] for hit in es_results['hits']['hits']]
+        if ids:
+            results = results.filter(Snippet.id.in_(ids))
+        else:
+            results = results.filter('null')
     else:
         results = results.order_by(-Snippet.id).limit(5)
     results = results.all()
