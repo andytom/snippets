@@ -19,6 +19,6 @@ class SimpleTestCase(BaseTestCase):
         rv = self.app.get('/snippet/fake')
         self.assertEqual(rv.status_code, 404)
 
-    def test_405_on_get_search(self):
+    def test_302_on_get_search_no_query(self):
         rv = self.app.get('/search')
-        self.assertEqual(rv.status_code, 405)
+        self.assertEqual(rv.status_code, 302)
