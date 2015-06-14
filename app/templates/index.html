@@ -2,16 +2,20 @@
 {%- block content %}
 {%- if results %}
   <h4>{{ results | length }} newest snippets</h4>
-  {%- for snippet in results %}
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <a href='{{ url_for('get_snippet', id=snippet.id) }}'>{{ snippet.title }}</a>
+  <div class="row">
+    {%- for snippet in results %}
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <a href='{{ url_for('get_snippet', id=snippet.id) }}'>{{ snippet.title }}</a>
+        </div>
+        <div class="panel-body">
+          {{ snippet.text | truncate(250, False) | markdown }}
+        </div>
+      </div>
     </div>
-    <div class="panel-body">
-      {{ snippet.text | truncate(250, False) | markdown }}
-    </div>
+    {%- endfor %}
   </div>
-  {%- endfor %}
 {%- else %}
   <h4>There are no snippets. Why don't you <a href='{{ url_for('new_snippet') }}'>Create One</a>?</h4>
 {%- endif %}

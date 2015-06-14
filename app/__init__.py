@@ -120,7 +120,7 @@ def page_not_found(error):
 
 @app.route('/')
 def index():
-    results = Snippet.query.order_by(-Snippet.id).limit(5).all()
+    results = Snippet.query.order_by(-Snippet.id).limit(10).all()
     return render_template('index.html', results=results)
 
 

@@ -17,8 +17,8 @@
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('new_snippet') }}">New Snippet</a></li>
+            <li><a href="{{ url_for('index') }}"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href="{{ url_for('new_snippet') }}"><span class="glyphicon glyphicon-plus"></span></a></li>
           </ul>
           <form role="search" class="navbar-form navbar-right" action="{{url_for('search')}}" method="post" name="search">
             <div class="form-group">

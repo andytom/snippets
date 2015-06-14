@@ -3,7 +3,7 @@
 {%- if results %}
   <h4>Results for query <strong>{{ query }}</strong></h4>
   {%- for result in results %}
-  <div class="panel panel-default">
+  <div class="panel panel-info">
     <div class="panel-heading">
       <a href='{{ url_for('get_snippet', id=result['id']) }}'>{{ result['title'] }}</a>
     </div>
