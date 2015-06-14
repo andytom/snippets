@@ -10,7 +10,7 @@ class SimpleTestCase(BaseTestCase):
         rv = self.app.get('/new')
         self.assertEqual(rv.status_code, 200)
 
-    def test_list_snippets(self):
+    def test_list_snippets_no_query(self):
         rv = self.app.get('/snippet')
         # Should redirect to '/'
         self.assertEqual(rv.status_code, 301)
@@ -19,6 +19,6 @@ class SimpleTestCase(BaseTestCase):
         rv = self.app.get('/snippet/fake')
         self.assertEqual(rv.status_code, 404)
 
-    def test_302_on_get_search_no_query(self):
+    def test_405_on_get_search(self):
         rv = self.app.get('/search')
-        self.assertEqual(rv.status_code, 302)
+        self.assertEqual(rv.status_code, 405)

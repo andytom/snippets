@@ -26,22 +26,26 @@ Misaka(app, fenced_code=True, intra_emphasis=False, strikethrough=True,
 #-----------------------------------------------------------------------------#
 # Helpers
 #-----------------------------------------------------------------------------#
-def index_item(mapper, connection, target):
+def make_searchable(es_client, model):
+    def index_item(mapper, connection, target):
 
-    data = {}
-    for field in target.__es_fields__:
-        data[field] = getattr(target, field)
+        data = {}
+        for field in target.__es_fields__:
+            data[field] = getattr(target, field)
 
-    es.index(index=target.__es_index__,
-             doc_type=target.__es_doc_type__,
-             body=data,
-             id=target.id)
+        es_client.index(index=target.__es_index__,
+                        doc_type=target.__es_doc_type__,
+                        body=data,
+                        id=target.id)
 
+    def delete_item(mapper, connection, target):
+        es_client.delete(index=target.__es_index__,
+                         doc_type=target.__es_doc_type__,
+                         id=target.id)
 
-def delete_item(mapper, connection, target):
-    es.delete(index=target.__es_index__,
-             doc_type=target.__es_doc_type__,
-             id=target.id)
+    event.listen(model, 'after_insert', index_item)
+    event.listen(model, 'after_update', index_item)
+    event.listen(model, 'after_delete', delete_item)
 
 
 #-----------------------------------------------------------------------------#
@@ -64,11 +68,22 @@ class Snippet(db.Model):
     def __repr__(self):
         return 'Snippet({0} - {1})'.format(self.id, self.title)
 
+    # TODO - Work out a better way to search for results
+    @classmethod
+    def es_search(self, q):
+        es_results = es.search(index=self.__es_index__,
+                               doc_type=self.__es_doc_type__,
+                               q=q)
+        results = []
+        for hit in es_results.get('hits', {}).get('hits',[]):
+            res = {'id': hit.get('_id')}
+            res.update(hit.get('_source'))
+            results.append(res)
+        return results
+
 
 # Update ElasicSearch after the database has been updated.
-event.listen(Snippet, 'after_insert', index_item)
-event.listen(Snippet, 'after_update', index_item)
-event.listen(Snippet, 'after_delete', delete_item)
+make_searchable(es, Snippet)
 
 
 #-----------------------------------------------------------------------------#
@@ -103,7 +118,6 @@ def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
 
-@app.route('/snippet/')
 @app.route('/')
 def index():
     results = Snippet.query.order_by(-Snippet.id).limit(5).all()
@@ -125,18 +139,20 @@ def new_snippet():
     return render_template('edit_snippet.html', form=form)
 
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search', methods=['POST'])
 def search():
     if g.search_form.validate_on_submit():
-        query = g.search_form.query.data
-        es_results = es.search(index=Snippet.__es_index__,
-                               doc_type=Snippet.__es_doc_type__,
-                               q=query)
-        results = []
-        for hit in es_results.get('hits', {}).get('hits',[]):
-            res = {'id': hit.get('_id')}
-            res.update(hit.get('_source'))
-            results.append(res)
+        return redirect(url_for('results', q=g.search_form.query.data))
+    return redirect(url_for('index'))
+
+
+@app.route('/snippet/')
+def results():
+    query = request.args.get('q')
+
+    if query:
+        g.search_form.query.data = query
+        results = Snippet.es_search(q=query)
         return render_template('results.html', results=results, query=query)
     return redirect(url_for('index'))
 
@@ -171,8 +187,7 @@ def edit_snippet(id):
     form = Snippit_Form()
 
     if form.validate_on_submit():
-        snippet.title = form.title.data
-        snippet.text = form.text.data
+        snippet.title, snippet.text = form.title.data, form.text.data
         db.session.add(snippet)
         db.session.commit()
         flash("Snippet '{}' Updated".format(snippet.title),
