@@ -24,3 +24,4 @@ TODO
 - [ ] Add help pages?
  - [ ] What Markdown is supported
  - [ ] What queries are supported
+- [ ] Custom Validator for search query
