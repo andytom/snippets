@@ -14,7 +14,14 @@ TODO
 - [ ] Write more tests
 - [x] Syntax highlighing
 - [ ] Manage commands for the database
+ - [ ] Create Database
+ - [ ] Migrate schema
 - [ ] Manage commands for the index
+ - [ ] Reindex all items
+ - [ ] Reindex some items
+ - [ ] Delete some items
+ - [ ] Delete all items
+ - [ ] Complete rebuild
 - [ ] Add users and permissions
  - [ ] Add user registration, login, log out
  - [ ] Must be logged in to create
