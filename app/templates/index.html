@@ -4,7 +4,7 @@
   <h4>{{ results | length }} newest snippets</h4>
     {%- for column in results | slice(2) %}
     <div class="row col-md-6">
-    {%- for snippet in column %}
+      {%- for snippet in column %}
       <div class="col-md-12">
         <div class="panel panel-info">
           <div class="panel-heading">
@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-    {%- endfor %}
+      {%- endfor %}
     </div>
     {%- endfor %}
   </div>
