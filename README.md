@@ -32,3 +32,4 @@ TODO
  - [ ] What Markdown is supported
  - [ ] What queries are supported
 - [ ] Custom Validator for search query
+- [ ] Groups of snippets?
