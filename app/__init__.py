@@ -19,8 +19,9 @@ app.config.from_object(os.environ.get('APP_SETTINGS',
 db = SQLAlchemy(app)
 es = FlaskElasticsearch(app)
 
-Misaka(app, fenced_code=True, intra_emphasis=False, strikethrough=True,
-       superscript=True, escape=True)
+Misaka(app, autolink=True, escape=True, fenced_code=True, no_html=True,
+       no_intra_emphasis=True, strikethrough=True, superscript=True,
+       safelink=True)
 
 
 #-----------------------------------------------------------------------------#
