@@ -9,6 +9,15 @@
         <div class="panel panel-info">
           <div class="panel-heading">
             <a href='{{ url_for('get_snippet', id=snippet.id) }}'>{{ snippet.title }}</a>
+            <div class="pull-right">
+                <a href="{{ url_for('edit_snippet', id=snippet.id) }}">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                &nbsp;
+                <a href="{{ url_for('delete_snippet', id=snippet.id) }}">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </div>
           </div>
           <div class="panel-body">
             {{ snippet.text | truncate(250, False) | markdown }}
