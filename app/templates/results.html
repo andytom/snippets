@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="panel-body">
-      {{ result['text'] | truncate(250, False) | markdown }}
+      {{ result['text'] | truncate(250) | markdown }}
     </div>
   </div>
   {%- endfor %}
