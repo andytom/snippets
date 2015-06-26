@@ -1,17 +1,9 @@
-{%- set base_btn_class = "btn btn-lg" %}
-{%- if destructive %}
-  {%- set yes_btn_class = base_btn_class + " btn-danger" %}
-  {%- set no_btn_class = base_btn_class + " btn-success" %}
-{%- else %}
-  {%- set yes_btn_class = base_btn_class + "btn-success" %}
-  {%- set no_btn_class = base_btn_class + "btn-danger" %}
-{%- endif %}
 {%- extends "base.html" %}
 {%- block content %}
 <h3>{{ question }}</h3>
 <form role="form" method="post">
   {{ form.hidden_tag() }}
-  <button type="submit" class="{{ yes_btn_class }}">Yes</button>
-  <a href="{{ request.referrer }}"><button type="button" class="{{ no_btn_class }}">No</button></a>
+  <button type="submit" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-ok"></span> Yes</button>
+  <a href="{{ request.referrer }}"><button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-remove"></span> No</button></a>
 </form>
 {%- endblock %}
