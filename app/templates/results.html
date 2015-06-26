@@ -1,26 +1,29 @@
+{%- set title = query %}
 {%- extends "base.html" %}
+
 {%- block content %}
 {%- if results %}
-  {%- if query %}
   <h4>Results for query <strong>{{ query }}</strong></h4>
-  {%- else %}
-  <h4>{{ results | length }} newest snippets</h4>
-  {%- endif %}
-  {%- for snippet in results %}
-  <div class="panel panel-default">
+  {%- for result in results %}
+  <div class="panel panel-info">
     <div class="panel-heading">
-      <a href='{{ url_for('get_snippet', id=snippet.id) }}'>{{ snippet.title }}</a>
+      <a href='{{ url_for('get_snippet', id=result['id']) }}'>{{ result['title'] }}</a>
+      <div class="pull-right">
+          <a href="{{ url_for('edit_snippet', id=result['id']) }}">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+          &nbsp;
+          <a href="{{ url_for('delete_snippet', id=result['id']) }}">
+            <span class="glyphicon glyphicon-trash"></span>
+          </a>
+      </div>
     </div>
     <div class="panel-body">
-      {{ snippet.text | truncate(250, False) | markdown }}
+      {{ result['text'] | truncate(250) | markdown }}
     </div>
   </div>
   {%- endfor %}
 {%- else %}
-  {%- if query %}
   <h4>No results for query <strong>{{ query }}</strong></h4>
-  {%- else %}
-  <h4>There are no snippets. Why don't you <a href='{{ url_for('new_snippet') }}'>Create One</a>?</h4>
-  {%- endif %}
 {%- endif %}
 {%- endblock %}
