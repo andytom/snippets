@@ -8,7 +8,7 @@ Overview
 
 Snippets is a simple Note taking application with Full Text Search.
 
-t is based on the Python [Flask framework](http://flask.pocoo.org/), uses
+It is based on the Python [Flask framework](http://flask.pocoo.org/), uses
 [Bootstrap](http://getbootstrap.com/) to look nice and
 [ElasticSearch](https://www.elastic.co/products/elasticsearch) for searching.
 
@@ -18,7 +18,7 @@ Running Snippets
 You can get Snippets up and running on [localhost:5000](http://localhost:5000/)
 using the following instructions. The following assumes you have python,
 pip, virtualenv, and virtualenvwrapper installed. It aslo assumes that you have
-ElasticSearch installed and listening on ~~~localhost:9200~~~
+ElasticSearch installed and listening on ```localhost:9200```.
 
 ~~~ bash
 $ git clone https://github.com/andytom/snippets.git
