@@ -17,7 +17,7 @@ def test():
     """Runs all the tests"""
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     test_dir = os.path.join(parent_dir, 'tests')
-    tests = unittest.TestLoader().discover(parent_dir)
+    tests = unittest.TestLoader().discover(test_dir)
     results = unittest.TextTestRunner(verbosity=2).run(tests)
 
 
