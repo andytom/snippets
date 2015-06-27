@@ -3,22 +3,28 @@ Snippets
 
 [![Build Status](https://travis-ci.org/andytom/snippets.svg?branch=master)](https://travis-ci.org/andytom/snippets)
 
+
 Overview
 --------
 
 Snippets is a simple Note taking application with Full Text Search.
 
 It is based on the Python [Flask framework](http://flask.pocoo.org/), uses
-[Bootstrap](http://getbootstrap.com/) to look nice and
-[ElasticSearch](https://www.elastic.co/products/elasticsearch) for searching.
+[Bootstrap](http://getbootstrap.com/) to look nice,
+[ElasticSearch](https://www.elastic.co/products/elasticsearch) for searching
+and a database of your choice for storage.
 
 
 Running Snippets
 ----------------
 You can get Snippets up and running on [localhost:5000](http://localhost:5000/)
 using the following instructions. The following assumes you have python,
-pip, virtualenv, and virtualenvwrapper installed. It aslo assumes that you have
-ElasticSearch installed and listening on ```localhost:9200```.
+pip, virtualenv, and virtualenvwrapper installed.
+
+It also assumes that you have ElasticSearch installed and listening
+on ```localhost:9200```. For more information about setting up ElasticSearch
+see the
+[ElasticSearch Docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 
 ~~~ bash
 $ git clone https://github.com/andytom/snippets.git
@@ -28,6 +34,7 @@ $ pip install -r requirements.txt
 $ ./manage.py runserver
 ~~~
 
+
 Testing
 -------
 You can run all the test locally using manage.py.
@@ -36,12 +43,10 @@ You can run all the test locally using manage.py.
 $ ./manage.py test
 ~~~
 
+
 TODO
 ----
-- [ ] Write a README
- - [x] General Overview
- - [ ] Deployment instructions
- - [x] Add a Licence
+- [x] Write a README
 - [ ] Add Doc strings
 - [ ] Write more tests
 - [x] Syntax highlighing
@@ -65,3 +70,11 @@ TODO
  - [ ] What queries are supported
 - [ ] Custom Validator for search query
 - [ ] Groups of snippets?
+- [ ] Production Deployment instructions
+
+License
+-------
+Snippets is licensed under the MIT license (See LICENSE) for more details.
+
+This doesn't include 3rd Party code in ```app/static/3rd_party```, these files
+are licenced under their own licences.
