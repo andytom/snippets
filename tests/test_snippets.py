@@ -44,3 +44,13 @@ class SnippetTestCase(BaseTestCase):
         snippet = Snippet.query.get(snippet.id)
         self.assertEqual(snippet.title, data['title'])
         self.assertEqual(snippet.text, data['text'])
+
+    @unittest.skip("Need to Mock out ES")
+    def test_snippet_delete(self):
+        snippet = Snippet('Test Title', 'Test Text')
+        self.db.session.add(snippet)
+        self.db.session.commit()
+
+        rv = self.app.post('/snippet/{}/delete'.format(snippet.id))
+
+        self.assertEqual(None, Snippet.query.get(snippet.id))
