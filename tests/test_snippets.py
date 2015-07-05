@@ -54,3 +54,16 @@ class SnippetTestCase(BaseTestCase):
         rv = self.app.post('/snippet/{}/delete'.format(snippet.id))
 
         self.assertEqual(None, Snippet.query.get(snippet.id))
+
+    @unittest.skip("Need to Mock out ES")
+    def test_search(self):
+        snippet = Snippet('Test Title', 'Test Text')
+        self.db.session.add(snippet)
+        self.db.session.commit()
+
+        rv = self.app.get('/snippet/?q=Test')
+
+        self.assertEqual(rv.status_code, 200)
+        self.assertEqual(snippet.title, rv.data)
+        self.assertEqual(snippet.text, rv.data)
+        self.assertFalse('No results for query' in rv.data)
