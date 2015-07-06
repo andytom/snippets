@@ -36,6 +36,12 @@ class ValidationTestCase(BaseTestCase):
 
         self.assertIn('This field is required.', rv.data)
 
+    def test_create_snippet_blank(self):
+        rv = self.app.post('/new', data={})
+
+        count = rv.data.count('This field is required.')
+        self.assertEqual(count, 2)
+
 
 class SnippetTestCase(BaseTestCase):
     @unittest.skip("Need to Mock out ES")
