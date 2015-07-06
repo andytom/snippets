@@ -49,6 +49,9 @@ TODO
 - [x] Write a README
 - [ ] Add Doc strings
 - [ ] Write more tests
+ - [ ] Mock out Elastic Search
+ - [ ] Tests with Empty Database
+ - [ ] Tests with Some Snippets
 - [x] Syntax highlighing
 - [ ] Manage commands for the database
  - [ ] Create Database
@@ -65,11 +68,11 @@ TODO
  - [ ] Only user or admin can delete or edit
  - [ ] Shared/not shared snippets?
  - [ ] Manage commands/Admin Page for Users
-- [ ] Add help pages?
+- [ ] Add help pages
  - [ ] What Markdown is supported
  - [ ] What queries are supported
 - [ ] Custom Validator for search query
-- [ ] Groups of snippets?
+- [ ] Groups of snippets
 - [ ] Production Deployment instructions
 
 License
