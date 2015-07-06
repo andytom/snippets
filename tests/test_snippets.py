@@ -20,6 +20,23 @@ class NoSnippetsTestCase(BaseTestCase):
         self.assertIn('No results for query', rv.data)
 
 
+class ValidationTestCase(BaseTestCase):
+    def test_create_snippet_no_title(self):
+        data = {'text': 'Test Text'}
+
+        rv = self.app.post('/new', data=data)
+
+        self.assertIn('This field is required.', rv.data)
+
+
+    def test_create_snippet_no_text(self):
+        data = {'title': 'Test Title'}
+
+        rv = self.app.post('/new', data=data)
+
+        self.assertIn('This field is required.', rv.data)
+
+
 class SnippetTestCase(BaseTestCase):
     @unittest.skip("Need to Mock out ES")
     def test_create_snippet(self):
@@ -27,6 +44,7 @@ class SnippetTestCase(BaseTestCase):
                 'text': 'Test Text'}
         rv = self.app.post('/new', data=data)
 
+        # There will only be one snippet.
         snippet = Snippet.query.all()[0]
         self.assertEqual(snippet.title, data['title'])
         self.assertEqual(snippet.text, data['text'])
