@@ -8,8 +8,11 @@ class SimpleTestCase(BaseTestCase):
 
     def test_list_snippets_no_query(self):
         rv = self.app.get('/snippet')
-        # Should redirect to '/'
-        self.assertEqual(rv.status_code, 301)
+        self.assertEqual(rv.status_code, 200)
+
+    def test_list_snippets_with_query(self):
+        rv = self.app.get('/snippet?q=test')
+        self.assertEqual(rv.status_code, 200)
 
     def test_405_on_get_search(self):
         rv = self.app.get('/search')

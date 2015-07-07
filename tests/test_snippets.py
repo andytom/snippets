@@ -15,9 +15,14 @@ class NoSnippetsTestCase(BaseTestCase):
 
     @unittest.skip("Need to Mock out ES")
     def test_search(self):
-        rv = self.app.get('/snippet/?q=test')
+        rv = self.app.get('/snippet?q=test')
         self.assertEqual(rv.status_code, 200)
         self.assertIn('No results for query', rv.data)
+
+    def test_search_no_query(self):
+        rv = self.app.get('/snippet')
+        self.assertEqual(rv.status_code, 200)
+        self.assertIn("There are no snippets.", rv.data)
 
 
 class ValidationTestCase(BaseTestCase):

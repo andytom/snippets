@@ -68,6 +68,7 @@ TODO
  - [ ] Only user or admin can delete or edit
  - [ ] Shared/not shared snippets?
  - [ ] Manage commands/Admin Page for Users
+- [ ] Add a landing page
 - [ ] Add help pages
  - [ ] What Markdown is supported
  - [ ] What queries are supported
