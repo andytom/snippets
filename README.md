@@ -50,8 +50,8 @@ TODO
 - [ ] Add Doc strings
 - [ ] Write more tests
  - [ ] Mock out Elastic Search
- - [ ] Tests with Empty Database
- - [ ] Tests with Some Snippets
+ - [x] Tests with Empty Database
+ - [x] Tests with Some Snippets
 - [x] Syntax highlighing
 - [ ] Manage commands for the database
  - [ ] Create Database

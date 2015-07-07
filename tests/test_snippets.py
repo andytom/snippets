@@ -4,6 +4,14 @@ from base import BaseTestCase
 
 
 class NoSnippetsTestCase(BaseTestCase):
+    def test_405_on_get_search(self):
+        rv = self.app.get('/search')
+        self.assertEqual(rv.status_code, 405)
+
+    def test_create_a_snippet(self):
+        rv = self.app.get('/new')
+        self.assertEqual(rv.status_code, 200)
+
     def test_index(self):
         rv = self.app.get('/')
         self.assertEqual(rv.status_code, 200)
@@ -19,7 +27,6 @@ class NoSnippetsTestCase(BaseTestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertIn('No results for query', rv.data)
 
-    @unittest.skip("Need to Mock out ES")
     def test_search_no_query(self):
         rv = self.app.get('/snippet')
         self.assertEqual(rv.status_code, 200)
