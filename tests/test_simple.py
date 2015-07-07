@@ -1,3 +1,4 @@
+import unittest
 from base import BaseTestCase
 
 
@@ -10,6 +11,7 @@ class SimpleTestCase(BaseTestCase):
         rv = self.app.get('/snippet')
         self.assertEqual(rv.status_code, 200)
 
+    @unittest.skip("Need to Mock out ES")
     def test_list_snippets_with_query(self):
         rv = self.app.get('/snippet?q=test')
         self.assertEqual(rv.status_code, 200)
