@@ -49,13 +49,11 @@ TODO
 - [x] Write a README
 - [ ] Add Doc strings
 - [x] Write more tests
- - [x] Mock out Elastic Search
- - [x] Tests with Empty Database
- - [x] Tests with Some Snippets
 - [x] Syntax highlighing
 - [ ] Manage commands for the database
  - [ ] Create Database
  - [ ] Migrate schema
+ - [ ] Instructions in the README
 - [ ] Manage commands for the index
  - [ ] Reindex all items
  - [ ] Reindex some items
