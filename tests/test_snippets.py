@@ -53,6 +53,12 @@ class NoSnippetsTestCase(BaseTestCase):
 
 
 class SnippetTestCase(BaseTestCase):
+    def _make_snippet(self, **snippet_args):
+        snippet = Snippet(**snippet_args)
+        self.db.session.add(snippet)
+        self.db.session.commit()
+        return snippet
+
     def test_create_snippet(self):
         data = {'title': 'Test Title',
                 'text': 'Test Text'}
@@ -64,9 +70,7 @@ class SnippetTestCase(BaseTestCase):
         self.assertEqual(snippet.text, data['text'])
 
     def test_snippet_update(self):
-        snippet = Snippet('Test Title', 'Test Text')
-        self.db.session.add(snippet)
-        self.db.session.commit()
+        snippet = self._make_snippet(title='Test Title', text='Test Text')
 
         data = {'title': 'Test Title Update',
                 'text': 'Test Text Update'}
@@ -77,18 +81,14 @@ class SnippetTestCase(BaseTestCase):
         self.assertEqual(snippet.text, data['text'])
 
     def test_snippet_delete(self):
-        snippet = Snippet('Test Title', 'Test Text')
-        self.db.session.add(snippet)
-        self.db.session.commit()
+        snippet = self._make_snippet(title='Test Title', text='Test Text')
 
         rv = self.app.post('/snippet/{}/delete'.format(snippet.id))
 
         self.assertEqual(None, Snippet.query.get(snippet.id))
 
     def test_search_with_results(self):
-        snippet = Snippet('Test Title', 'Test Text')
-        self.db.session.add(snippet)
-        self.db.session.commit()
+        snippet = self._make_snippet(title='Test Title', text='Test Text')
 
         make_fake_search({'hits': {'hits': [{'_id': snippet.id,
                                             '_source': {
@@ -104,9 +104,7 @@ class SnippetTestCase(BaseTestCase):
         self.assertFalse('No results for query' in rv.data)
 
     def test_search_without_results(self):
-        snippet = Snippet('Test Title', 'Test Text')
-        self.db.session.add(snippet)
-        self.db.session.commit()
+        snippet = self._make_snippet(title='Test Title', text='Test Text')
 
         make_fake_search({})
 
