@@ -147,7 +147,7 @@ def search():
     return redirect(url_for('index'))
 
 
-@app.route('/snippet/')
+@app.route('/snippet')
 def results():
     query = request.args.get('q')
 
@@ -155,7 +155,9 @@ def results():
         g.search_form.query.data = query
         results = Snippet.es_search(q=query)
         return render_template('results.html', results=results, query=query)
-    return redirect(url_for('index'))
+    else:
+        results = Snippet.query.order_by(-Snippet.id).limit(10).all()
+        return render_template('index.html', results=results)
 
 
 @app.route('/snippet/<int:id>')

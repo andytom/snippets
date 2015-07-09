@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import sys
 import unittest
 from flask.ext.script import Manager, Server
 from app import app
@@ -19,6 +20,8 @@ def test():
     test_dir = os.path.join(parent_dir, 'tests')
     tests = unittest.TestLoader().discover(test_dir)
     results = unittest.TextTestRunner(verbosity=2).run(tests)
+    ret = not results.wasSuccessful()
+    sys.exit(ret)
 
 
 if __name__ == '__main__':
