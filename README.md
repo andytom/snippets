@@ -48,11 +48,12 @@ TODO
 ----
 - [x] Write a README
 - [ ] Add Doc strings
-- [ ] Write more tests
+- [x] Write more tests
 - [x] Syntax highlighing
 - [ ] Manage commands for the database
  - [ ] Create Database
  - [ ] Migrate schema
+ - [ ] Instructions in the README
 - [ ] Manage commands for the index
  - [ ] Reindex all items
  - [ ] Reindex some items
@@ -65,12 +66,16 @@ TODO
  - [ ] Only user or admin can delete or edit
  - [ ] Shared/not shared snippets?
  - [ ] Manage commands/Admin Page for Users
-- [ ] Add help pages?
+- [ ] Add a landing page
+- [ ] Add help pages
  - [ ] What Markdown is supported
  - [ ] What queries are supported
 - [ ] Custom Validator for search query
-- [ ] Groups of snippets?
+- [ ] Groups of snippets
 - [ ] Production Deployment instructions
+- [ ] Work out a better way to do searching
+ - [ ] Snippet.es_search
+ - [ ] Moching out for testing
 
 License
 -------

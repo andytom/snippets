@@ -7,7 +7,7 @@
     {{ form.title(id="title", class="form-control")}}
     {%- if form.title.errors %}
     <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-    {%- for error in form.text.errors %}
+    {%- for error in form.title.errors %}
     <span class="help-block">{{ error }}</span>
     {%- endfor %}
     {%- endif %}
