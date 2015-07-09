@@ -48,8 +48,8 @@ TODO
 ----
 - [x] Write a README
 - [ ] Add Doc strings
-- [ ] Write more tests
- - [ ] Mock out Elastic Search
+- [x] Write more tests
+ - [x] Mock out Elastic Search
  - [x] Tests with Empty Database
  - [x] Tests with Some Snippets
 - [x] Syntax highlighing
@@ -75,6 +75,9 @@ TODO
 - [ ] Custom Validator for search query
 - [ ] Groups of snippets
 - [ ] Production Deployment instructions
+- [ ] Work out a better way to do searching
+ - [ ] Snippet.es_search
+ - [ ] Moching out for testing
 
 License
 -------

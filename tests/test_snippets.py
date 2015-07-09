@@ -2,12 +2,19 @@ import unittest
 from app import Snippet, es
 from base import BaseTestCase
 
+
 def fake_index(*args, **kwargs):
     pass
 
 
 def fake_delete(*args, **kwargs):
     pass
+
+
+def make_fake_search(results):
+    def fake_search(*args, **kwargs):
+        return results
+    es.search = fake_search
 
 
 es.index = fake_index
@@ -32,8 +39,9 @@ class NoSnippetsTestCase(BaseTestCase):
         rv = self.app.get('/snippet/1')
         self.assertEqual(rv.status_code, 404)
 
-    @unittest.skip("Need to Mock out ES")
     def test_search(self):
+        make_fake_search({})
+
         rv = self.app.get('/snippet?q=test')
         self.assertEqual(rv.status_code, 200)
         self.assertIn('No results for query', rv.data)
@@ -77,15 +85,32 @@ class SnippetTestCase(BaseTestCase):
 
         self.assertEqual(None, Snippet.query.get(snippet.id))
 
-    @unittest.skip("Need to Mock out ES")
-    def test_search(self):
+    def test_search_with_results(self):
         snippet = Snippet('Test Title', 'Test Text')
         self.db.session.add(snippet)
         self.db.session.commit()
 
-        rv = self.app.get('/snippet/?q=Test')
+        make_fake_search({'hits': {'hits': [{'_id': snippet.id,
+                                            '_source': {
+                                                'title': snippet.title,
+                                                'text': snippet.text,
+                                                }}]}})
+
+        rv = self.app.get('/snippet?q=Test')
 
         self.assertEqual(rv.status_code, 200)
-        self.assertEqual(snippet.title, rv.data)
-        self.assertEqual(snippet.text, rv.data)
+        self.assertIn(snippet.title, rv.data)
+        self.assertIn(snippet.text, rv.data)
         self.assertFalse('No results for query' in rv.data)
+
+    def test_search_without_results(self):
+        snippet = Snippet('Test Title', 'Test Text')
+        self.db.session.add(snippet)
+        self.db.session.commit()
+
+        make_fake_search({})
+
+        rv = self.app.get('/snippet?q=aaaaaaaaa')
+
+        self.assertEqual(rv.status_code, 200)
+        self.assertIn('No results for query', rv.data)
