@@ -1,6 +1,17 @@
 import unittest
-from app import Snippet
+from app import Snippet, es
 from base import BaseTestCase
+
+def fake_index(*args, **kwargs):
+    pass
+
+
+def fake_delete(*args, **kwargs):
+    pass
+
+
+es.index = fake_index
+es.delete = fake_delete
 
 
 class NoSnippetsTestCase(BaseTestCase):
@@ -34,7 +45,6 @@ class NoSnippetsTestCase(BaseTestCase):
 
 
 class SnippetTestCase(BaseTestCase):
-    @unittest.skip("Need to Mock out ES")
     def test_create_snippet(self):
         data = {'title': 'Test Title',
                 'text': 'Test Text'}
@@ -45,7 +55,6 @@ class SnippetTestCase(BaseTestCase):
         self.assertEqual(snippet.title, data['title'])
         self.assertEqual(snippet.text, data['text'])
 
-    @unittest.skip("Need to Mock out ES")
     def test_snippet_update(self):
         snippet = Snippet('Test Title', 'Test Text')
         self.db.session.add(snippet)
@@ -59,7 +68,6 @@ class SnippetTestCase(BaseTestCase):
         self.assertEqual(snippet.title, data['title'])
         self.assertEqual(snippet.text, data['text'])
 
-    @unittest.skip("Need to Mock out ES")
     def test_snippet_delete(self):
         snippet = Snippet('Test Title', 'Test Text')
         self.db.session.add(snippet)
