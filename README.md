@@ -76,6 +76,7 @@ TODO
 - [ ] Work out a better way to do searching
  - [ ] Snippet.es_search
  - [ ] Moching out for testing
+- [ ] Automate pep8 testing
 
 License
 -------

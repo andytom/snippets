@@ -4,6 +4,7 @@ import os
 PARENT_DIR = os.path.dirname(os.path.abspath(__file__))
 TMP_DIR = os.path.join(PARENT_DIR, 'tmp')
 
+
 class BaseConfig(object):
     DEBUG = True
     # For more info see the flask documentation on sessions
