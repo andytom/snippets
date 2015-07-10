@@ -13,8 +13,6 @@ class BaseConfig(object):
     # >>> import os
     # >>> os.urandom(24)
     SECRET_KEY = 'DEFAULT'
-    WHOOSH_BASE = os.environ.get('WHOOSH_DIR',
-                                 os.path.join(TMP_DIR, 'snippet_index'))
 
 
 class TestConfig(BaseConfig):
