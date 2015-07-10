@@ -49,6 +49,7 @@ TODO
 - [x] Write a README
 - [ ] Add Doc strings
 - [x] Write more tests
+- [x] Automate pep8 testing
 - [x] Syntax highlighing
 - [ ] Manage commands for the database
  - [ ] Create Database
@@ -76,7 +77,6 @@ TODO
 - [ ] Work out a better way to do searching
  - [ ] Snippet.es_search
  - [ ] Moching out for testing
-- [ ] Automate pep8 testing
 
 License
 -------

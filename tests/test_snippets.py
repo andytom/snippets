@@ -94,7 +94,7 @@ class SnippetTestCase(BaseTestCase):
                                             '_source': {
                                                 'title': snippet.title,
                                                 'text': snippet.text,
-                                                }}]}})
+                                            }}]}})
 
         rv = self.app.get('/snippet?q=Test')
 
