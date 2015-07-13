@@ -77,6 +77,8 @@ TODO
 - [ ] Work out a better way to do searching
  - [ ] Snippet.es_search
  - [ ] Moching out for testing
+- [ ] Look at duplication in templates
+ - [ ] Rendering snippets
 
 License
 -------
