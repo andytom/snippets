@@ -76,7 +76,7 @@ class Snippet(db.Model):
                                doc_type=self.__es_doc_type__,
                                q=q)
         results = []
-        for hit in es_results.get('hits', {}).get('hits',[]):
+        for hit in es_results.get('hits', {}).get('hits', []):
             res = {'id': hit.get('_id')}
             res.update(hit.get('_source'))
             results.append(res)
@@ -136,7 +136,7 @@ def new_snippet():
         flash("Created Snippet '{}'".format(new_snippet.title),
               'alert-success')
         return redirect(url_for('get_snippet', id=new_snippet.id))
-    
+
     return render_template('edit_snippet.html', form=form)
 
 

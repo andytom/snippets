@@ -4,6 +4,7 @@ import os
 PARENT_DIR = os.path.dirname(os.path.abspath(__file__))
 TMP_DIR = os.path.join(PARENT_DIR, 'tmp')
 
+
 class BaseConfig(object):
     DEBUG = True
     # For more info see the flask documentation on sessions
@@ -12,8 +13,6 @@ class BaseConfig(object):
     # >>> import os
     # >>> os.urandom(24)
     SECRET_KEY = 'DEFAULT'
-    WHOOSH_BASE = os.environ.get('WHOOSH_DIR',
-                                 os.path.join(TMP_DIR, 'snippet_index'))
 
 
 class TestConfig(BaseConfig):

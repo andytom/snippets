@@ -7,15 +7,12 @@ class ValidationTestCase(BaseTestCase):
         data = {'text': 'Test Text'}
 
         rv = self.app.post('/new', data=data)
-
         self.assertIn('This field is required.', rv.data)
-
 
     def test_create_snippet_no_text(self):
         data = {'title': 'Test Title'}
 
         rv = self.app.post('/new', data=data)
-
         self.assertIn('This field is required.', rv.data)
 
     def test_create_snippet_blank(self):

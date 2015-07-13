@@ -49,6 +49,7 @@ TODO
 - [x] Write a README
 - [ ] Add Doc strings
 - [x] Write more tests
+- [x] Automate pep8 testing
 - [x] Syntax highlighing
 - [ ] Manage commands for the database
  - [ ] Create Database
