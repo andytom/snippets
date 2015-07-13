@@ -3,6 +3,7 @@ import os
 import sys
 import unittest
 from flask.ext.script import Manager, Server
+from flask.ext.migrate import MigrateCommand
 from app import app
 
 
@@ -11,6 +12,9 @@ manager = Manager(app)
 
 server = Server(host='0.0.0.0', use_debugger=True)
 manager.add_command("runserver", server)
+
+
+manager.add_command('db', MigrateCommand)
 
 
 @manager.command
