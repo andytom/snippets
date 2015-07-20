@@ -1,12 +1,13 @@
 import os
 from flask import Flask, request, render_template, redirect, url_for, g, flash
+from flask.ext.elasticsearch import FlaskElasticsearch
+from flask.ext.migrate import Migrate
 from flask.ext.misaka import Misaka
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.elasticsearch import FlaskElasticsearch
 from flask_wtf import Form
+from sqlalchemy import event
 from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired
-from sqlalchemy import event
 
 
 #-----------------------------------------------------------------------------#
@@ -22,6 +23,8 @@ es = FlaskElasticsearch(app)
 Misaka(app, autolink=True, escape=True, fenced_code=True, no_html=True,
        no_intra_emphasis=True, strikethrough=True, superscript=True,
        safelink=True)
+
+Migrate(app, db)
 
 
 #-----------------------------------------------------------------------------#

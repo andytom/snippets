@@ -31,6 +31,7 @@ $ git clone https://github.com/andytom/snippets.git
 $ mkvirtualenv snippets
 $ cd snippets
 $ pip install -r requirements.txt
+$ ./manage.py db upgrade
 $ ./manage.py runserver
 ~~~
 
@@ -44,6 +45,16 @@ $ ./manage.py test
 ~~~
 
 
+Database Management
+-------------------
+Changes to the Database schema are managed using [Flask-Migrate](https://flask-migrate.readthedocs.org/en/latest/).
+You can read the full help via:
+
+~~~
+$ ./manage.py db --help
+~~~
+
+
 TODO
 ----
 - [x] Write a README
@@ -51,10 +62,10 @@ TODO
 - [x] Write more tests
 - [x] Automate pep8 testing
 - [x] Syntax highlighing
-- [ ] Manage commands for the database
- - [ ] Create Database
- - [ ] Migrate schema
- - [ ] Instructions in the README
+- [x] Manage commands for the database
+ - [x] Create Database
+ - [x] Migrate schema
+ - [x] Instructions in the README
 - [ ] Manage commands for the index
  - [ ] Reindex all items
  - [ ] Reindex some items
@@ -77,6 +88,8 @@ TODO
 - [ ] Work out a better way to do searching
  - [ ] Snippet.es_search
  - [ ] Moching out for testing
+- [ ] Look at duplication in templates
+ - [ ] Rendering snippets
 
 License
 -------
