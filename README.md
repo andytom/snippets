@@ -31,6 +31,7 @@ $ git clone https://github.com/andytom/snippets.git
 $ mkvirtualenv snippets
 $ cd snippets
 $ pip install -r requirements.txt
+$ ./manage.py db upgrade
 $ ./manage.py runserver
 ~~~
 
