@@ -2,21 +2,39 @@
 import os
 import sys
 import unittest
-from flask.ext.script import Manager, Server
+from flask.ext.script import Manager, Server, Shell
 from flask.ext.migrate import MigrateCommand
-from app import app
+from app import app, db, Snippet
 
 
 manager = Manager(app)
 
 
+#-----------------------------------------------------------------------------#
+# Server
+#-----------------------------------------------------------------------------#
 server = Server(host='0.0.0.0', use_debugger=True)
 manager.add_command("runserver", server)
 
 
+#-----------------------------------------------------------------------------#
+# Database Management
+#-----------------------------------------------------------------------------#
 manager.add_command('db', MigrateCommand)
 
 
+#-----------------------------------------------------------------------------#
+# Shell
+#-----------------------------------------------------------------------------#
+def _make_context():
+    return dict(app=app, db=db, Snippet=Snippet)
+
+manager.add_command("shell", Shell(make_context=_make_context))
+
+
+#-----------------------------------------------------------------------------#
+# Running Tests
+#-----------------------------------------------------------------------------#
 @manager.command
 def test():
     """Runs all the tests"""
@@ -28,5 +46,8 @@ def test():
     sys.exit(ret)
 
 
+#-----------------------------------------------------------------------------#
+# Main
+#-----------------------------------------------------------------------------#
 if __name__ == '__main__':
     manager.run()
