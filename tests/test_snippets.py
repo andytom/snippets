@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import unittest
 from app import Snippet, es
 from base import BaseTestCase
