@@ -27,6 +27,10 @@ manager.add_command('db', MigrateCommand)
 # Shell
 #-----------------------------------------------------------------------------#
 def _make_context():
+    """_make_context
+
+       :returns: A dict of objects to import in the shell
+    """
     return dict(app=app, db=db, es=es, Snippet=Snippet)
 
 manager.add_command("shell", Shell(make_context=_make_context))

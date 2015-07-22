@@ -58,14 +58,11 @@ $ ./manage.py db --help
 TODO
 ----
 - [x] Write a README
-- [ ] Add Doc strings
+- [x] Add Doc strings
 - [x] Write more tests
 - [x] Automate pep8 testing
 - [x] Syntax highlighing
 - [x] Manage commands for the database
- - [x] Create Database
- - [x] Migrate schema
- - [x] Instructions in the README
 - [ ] Manage commands for the index
  - [ ] Reindex all items
  - [ ] Reindex some items
