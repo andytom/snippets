@@ -6,7 +6,7 @@ cache: pip
 # command to run tests
 script:
  - ./manage.py test
- - pep8 --statistics --show-source app/ tests/
+ - pep8 --statistics --show-source
 
 # Don't send email notifications
 notifications:
