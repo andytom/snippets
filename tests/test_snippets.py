@@ -37,6 +37,7 @@ class NoSnippetsTestCase(BaseTestCase):
 
        Test Case for all tests when no Snippets have been added
     """
+
     def test_405_on_get_search(self):
         """test_405_on_get_search
 
@@ -98,6 +99,7 @@ class SnippetTestCase(BaseTestCase):
 
        Test Case for all tests when Snippets have been added
     """
+
     def _make_snippet(self, **snippet_args):
         """_make_snippet
 
