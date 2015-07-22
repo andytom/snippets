@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import os
 
 
@@ -6,6 +7,10 @@ TMP_DIR = os.path.join(PARENT_DIR, 'tmp')
 
 
 class BaseConfig(object):
+    """BaseConfig
+
+       The base config all other config should inherit from this
+    """
     DEBUG = True
     # For more info see the flask documentation on sessions
     # http://flask.pocoo.org/docs/0.10/quickstart/#sessions
@@ -16,17 +21,29 @@ class BaseConfig(object):
 
 
 class TestConfig(BaseConfig):
+    """TestConfig
+
+       The config for use when testing the App
+    """
     TESTING = True
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 
 
 class DevelopmentConfig(BaseConfig):
+    """DevelopmentConfig
+
+       The config for use when developing on a local machine
+    """
     _db = os.path.join(TMP_DIR, 'snippets.db')
     SQLALCHEMY_DATABASE_URI = 'sqlite:///{}'.format(_db)
 
 
 class ProductionConfig(BaseConfig):
+    """ProductionConfig
+
+       The config for use in production.
+    """
     DEBUG = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')

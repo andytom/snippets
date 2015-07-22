@@ -4,6 +4,10 @@ from app import app, db
 
 
 class BaseTestCase(unittest.TestCase):
+    """BaseTestCase
+
+       Base test case for use with all unit tests contains common functions
+    """
     def setUp(self):
         app.config.from_object('config.TestConfig')
         self.app = app.test_client()
