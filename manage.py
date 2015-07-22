@@ -4,7 +4,7 @@ import sys
 import unittest
 from flask.ext.script import Manager, Server, Shell
 from flask.ext.migrate import MigrateCommand
-from app import app, db, Snippet
+from app import app, db, es, Snippet
 
 
 manager = Manager(app)
@@ -27,7 +27,7 @@ manager.add_command('db', MigrateCommand)
 # Shell
 #-----------------------------------------------------------------------------#
 def _make_context():
-    return dict(app=app, db=db, Snippet=Snippet)
+    return dict(app=app, db=db, es=es, Snippet=Snippet)
 
 manager.add_command("shell", Shell(make_context=_make_context))
 
