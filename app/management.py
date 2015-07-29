@@ -30,7 +30,8 @@ def reindex(snippet_id):
 
     if snippet:
         do_index_item(es, snippet)
-        print "Snippet '{} - {}' has been reindexed".format(snippet.id, snippet.title)
+        print "Snippet '{} - {}' has been reindexed".format(snippet.id,
+                                                            snippet.title)
     else:
         print "No Snippet with id '{}' to index".format(snippet_id)
 
@@ -53,4 +54,5 @@ def rebuild():
         print "All items deleted from the index"
         for snippet in Snippet.query.all():
             do_index_item(es, snippet)
-            print "Snippet '{} - {}' has been reindexed".format(snippet.id, snippet.title)
+            print "Snippet '{} - {}' has been reindexed".format(snippet.id,
+                                                                snippet.title)
