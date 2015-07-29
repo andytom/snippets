@@ -54,6 +54,15 @@ You can read the full help via:
 $ ./manage.py db --help
 ~~~
 
+ElasticSearch Index Management
+------------------------------
+The connection to ElasticSearch and the ElasticSearch Indexes can be managed using ~~~manage.py~~~.
+You can read the full help via:
+
+~~~
+$ ./manage.py es --help
+~~~
+
 
 TODO
 ----
@@ -64,10 +73,6 @@ TODO
 - [x] Syntax highlighing
 - [x] Manage commands for the database
 - [x] Manage commands for the index
- - [x] Reindex some items
- - [x] Delete some items
- - [x] Reindex all items
- - [x] Complete rebuild
 - [ ] Add users and permissions
  - [ ] Add user registration, login, log out
  - [ ] Must be logged in to create
