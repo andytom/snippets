@@ -6,9 +6,10 @@ from flask.ext.migrate import Migrate
 from flask.ext.misaka import Misaka
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_wtf import Form
-from sqlalchemy import event
 from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired
+
+from make_searchable import make_searchable
 
 
 #-----------------------------------------------------------------------------#
@@ -26,40 +27,6 @@ Misaka(app, autolink=True, escape=True, fenced_code=True, no_html=True,
        safelink=True)
 
 Migrate(app, db)
-
-
-#-----------------------------------------------------------------------------#
-# Helpers
-#-----------------------------------------------------------------------------#
-def make_searchable(es_client, model):
-    """make_searchable
-
-       Take a SQLAlchemy database model and add hook to make sure it is
-       add, updated and remove for the Elastic Search Models.
-
-       :param es_client: A elasicsearch-py Elasticsearch object to use for the
-                         interactions with ElasticSearch.
-       :param model: The SQLAlchemy database model to make searchable.
-    """
-    def index_item(mapper, connection, target):
-
-        data = {}
-        for field in target.__es_fields__:
-            data[field] = getattr(target, field)
-
-        es_client.index(index=target.__es_index__,
-                        doc_type=target.__es_doc_type__,
-                        body=data,
-                        id=target.id)
-
-    def delete_item(mapper, connection, target):
-        es_client.delete(index=target.__es_index__,
-                         doc_type=target.__es_doc_type__,
-                         id=target.id)
-
-    event.listen(model, 'after_insert', index_item)
-    event.listen(model, 'after_update', index_item)
-    event.listen(model, 'after_delete', delete_item)
 
 
 #-----------------------------------------------------------------------------#
