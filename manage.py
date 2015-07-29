@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import os
 import sys
+import subprocess
 import unittest
 from flask.ext.script import Manager, Server, Shell
 from flask.ext.migrate import MigrateCommand
@@ -52,10 +53,22 @@ def test():
     """Runs all the tests"""
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     test_dir = os.path.join(parent_dir, 'tests')
+
     tests = unittest.TestLoader().discover(test_dir)
     results = unittest.TextTestRunner(verbosity=2).run(tests)
+
     ret = not results.wasSuccessful()
     sys.exit(ret)
+
+
+@manager.command
+def pep8():
+    """Run all pep8 tests"""
+
+    command = subprocess.Popen(["pep8", "--statistics", "--show-source"])
+
+    command.communicate()
+    sys.exit(command.returncode)
 
 
 #-----------------------------------------------------------------------------#
