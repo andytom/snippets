@@ -63,12 +63,11 @@ TODO
 - [x] Automate pep8 testing
 - [x] Syntax highlighing
 - [x] Manage commands for the database
-- [ ] Manage commands for the index
- - [ ] Reindex all items
- - [ ] Reindex some items
- - [ ] Delete some items
- - [ ] Delete all items
- - [ ] Complete rebuild
+- [x] Manage commands for the index
+ - [x] Reindex some items
+ - [x] Delete some items
+ - [x] Reindex all items
+ - [x] Complete rebuild
 - [ ] Add users and permissions
  - [ ] Add user registration, login, log out
  - [ ] Must be logged in to create
@@ -87,6 +86,8 @@ TODO
  - [ ] Moching out for testing
 - [ ] Look at duplication in templates
  - [ ] Rendering snippets
+- [ ] Tests for make_searchable
+
 
 License
 -------
