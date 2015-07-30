@@ -63,11 +63,13 @@ def test():
 
 @manager.command
 def pep8():
-    """Run all pep8 tests"""
+    """Run pep8 lint"""
 
     command = subprocess.Popen(["pep8", "--statistics", "--show-source"])
 
     command.communicate()
+    if not command.returncode:
+        print "pep8 OK!"
     sys.exit(command.returncode)
 
 
