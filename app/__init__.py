@@ -4,12 +4,11 @@ from flask import Flask, request, render_template, redirect, url_for, g, flash
 from flask.ext.elasticsearch import FlaskElasticsearch
 from flask.ext.migrate import Migrate
 from flask.ext.misaka import Misaka
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask_wtf import Form
-from wtforms import StringField, TextAreaField
-from wtforms.validators import DataRequired
 
 from make_searchable import make_searchable
+
+from models import db, Snippet
+from forms import Confirm_Form, Search_Form, Snippit_Form
 
 
 #-----------------------------------------------------------------------------#
@@ -19,7 +18,8 @@ app = Flask(__name__)
 app.config.from_object(os.environ.get('APP_SETTINGS',
                                       'config.DevelopmentConfig'))
 
-db = SQLAlchemy(app)
+db.init_app(app)
+
 es = FlaskElasticsearch(app)
 
 Misaka(app, autolink=True, escape=True, fenced_code=True, no_html=True,
@@ -28,91 +28,8 @@ Misaka(app, autolink=True, escape=True, fenced_code=True, no_html=True,
 
 Migrate(app, db)
 
-
-#-----------------------------------------------------------------------------#
-# Model
-#-----------------------------------------------------------------------------#
-class Snippet(db.Model):
-    """Snippet
-
-       Class for our snippets that want to store and search over.
-    """
-    __tablename__ = 'snippet'
-    __es_index__ = 'snippets'
-    __es_doc_type__ = 'snippet'
-    __es_fields__ = ['title', 'text']
-
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64))
-    text = db.Column(db.Text())
-
-    def __init__(self, title, text):
-        """Snippet.__init__
-
-           :param title: The title of the Snippet
-           :param text: The markdown text of the Snippet
-        """
-        self.title = title
-        self.text = text
-
-    def __repr__(self):
-        """Snippet.__repr__
-
-           :returns: The Unicode representation of the Snippet.
-        """
-        return 'Snippet({0} - {1})'.format(self.id, self.title)
-
-    # TODO - Work out a better way to search for results
-    @classmethod
-    def es_search(self, q):
-        """Snippet.es_search
-
-           :param q: The query in Lucene Query Language to search ElasticSearch
-
-           :returns: A list containing the results of the search. Each result
-                     is a dict containing the id, title and text of the Snippet
-        """
-        es_results = es.search(index=self.__es_index__,
-                               doc_type=self.__es_doc_type__,
-                               q=q)
-        results = []
-        for hit in es_results.get('hits', {}).get('hits', []):
-            res = {'id': hit.get('_id')}
-            res.update(hit.get('_source'))
-            results.append(res)
-        return results
-
-
 # Update ElasicSearch after the database has been updated.
 make_searchable(es, Snippet)
-
-
-#-----------------------------------------------------------------------------#
-# Forms
-#-----------------------------------------------------------------------------#
-class Snippit_Form(Form):
-    """Snippit_Form
-
-       A Form for creating or editing Snippets
-    """
-    title = StringField('title', validators=[DataRequired()])
-    text = TextAreaField('text', validators=[DataRequired()])
-
-
-class Search_Form(Form):
-    """Search_Form
-
-       A Form for Search Queries
-    """
-    query = StringField('query', validators=[DataRequired()])
-
-
-class Confirm_Form(Form):
-    """Confirm_Form
-
-       A Form for simple yes/no questions
-    """
-    pass
 
 
 #-----------------------------------------------------------------------------#
@@ -212,7 +129,7 @@ def results():
 
     if query:
         g.search_form.query.data = query
-        results = Snippet.es_search(q=query)
+        results = Snippet.es_search(es=es, q=query)
         return render_template('results.html', results=results, query=query)
     else:
         results = Snippet.query.order_by(-Snippet.id).limit(10).all()
