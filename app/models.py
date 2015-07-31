@@ -6,7 +6,7 @@ db = SQLAlchemy()
 
 
 #-----------------------------------------------------------------------------#
-# Model
+# Models
 #-----------------------------------------------------------------------------#
 class Snippet(db.Model):
     """Snippet
@@ -43,6 +43,8 @@ class Snippet(db.Model):
     def es_search(self, es, q):
         """Snippet.es_search
 
+           :param es: The ElasticSearch client that we want to use for
+                      searching.
            :param q: The query in Lucene Query Language to search ElasticSearch
 
            :returns: A list containing the results of the search. Each result
