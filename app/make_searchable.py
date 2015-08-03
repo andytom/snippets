@@ -6,9 +6,7 @@ from sqlalchemy import event
 # Helpers
 #-----------------------------------------------------------------------------#
 def do_index_item(es_client, item):
-    """do_index_item
-
-       Take the passed item and add it to the index using the passed
+    """Take the passed item and add it to the index using the passed
        ElasticSearch client.
 
        :param es_client: A elasicsearch-py Elasticsearch object to use for the
@@ -26,9 +24,7 @@ def do_index_item(es_client, item):
 
 
 def do_delete_item(es_client, model, item_id):
-    """do_delete_item
-
-       Remove a document from the ElasticSearch index.
+    """Remove a document from the ElasticSearch index.
 
        :param es_client: A elasicsearch-py Elasticsearch object to use for the
                          interactions with ElasticSearch.
@@ -44,13 +40,33 @@ def do_delete_item(es_client, model, item_id):
         pass
 
 
+# TODO - Work out a better way to search for results
+def es_search(cls, es, q):
+    """Search over the item
+
+       :param es: The ElasticSearch client that we want to use for
+                  searching.
+       :param q: The query in Lucene Query Language to search ElasticSearch
+
+       :returns: A list containing the results of the search. Each result
+                 is a dict containing the id, title and text of the Snippet
+    """
+    es_results = es.search(index=cls.__es_index__,
+                           doc_type=cls.__es_doc_type__,
+                           q=q)
+    results = []
+    for hit in es_results.get('hits', {}).get('hits', []):
+        res = {'id': hit.get('_id')}
+        res.update(hit.get('_source'))
+        results.append(res)
+    return results
+
+
 #-----------------------------------------------------------------------------#
 # Main
 #-----------------------------------------------------------------------------#
 def make_searchable(es_client, model):
-    """make_searchable
-
-       Take a SQLAlchemy database model and add hook to make sure it is
+    """Take a SQLAlchemy database model and add hook to make sure it is
        add, updated and remove for the Elastic Search Models.
 
        :param es_client: A elasicsearch-py Elasticsearch object to use for the
@@ -66,3 +82,5 @@ def make_searchable(es_client, model):
     event.listen(model, 'after_insert', index_item)
     event.listen(model, 'after_update', index_item)
     event.listen(model, 'after_delete', delete_item)
+
+    model.es_search = classmethod(es_search)

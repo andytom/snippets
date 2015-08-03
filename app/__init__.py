@@ -37,10 +37,7 @@ make_searchable(es, Snippet)
 #-----------------------------------------------------------------------------#
 @app.before_request
 def before_request():
-    """before_request
-
-       Pre request hook
-    """
+    """Pre request hook"""
     g.search_form = Search_Form()
 
 
@@ -49,9 +46,7 @@ def before_request():
 #-----------------------------------------------------------------------------#
 @app.errorhandler(404)
 def page_not_found(error):
-    """page_not_found
-
-       Generic 404 error page.
+    """Generic 404 error page.
 
        :param error: An exception from the error.
        :returns: The rendered 404 error template.
@@ -64,9 +59,7 @@ def page_not_found(error):
 #-----------------------------------------------------------------------------#
 @app.route('/')
 def index():
-    """index
-
-       Index page for the all users.
+    """Index page for the all users.
 
        :returns: The rendered index template.
     """
@@ -76,9 +69,7 @@ def index():
 
 @app.route('/new', methods=['GET', 'POST'])
 def new_snippet():
-    """new_snippet
-
-       Page for creating new snippets.
+    """Page for creating new snippets.
 
        :returns: Returns a page to create a form. If the form is valid when it
                  is submitted create a new Snippet and redirect the user to the
@@ -103,9 +94,7 @@ def new_snippet():
 #-----------------------------------------------------------------------------#
 @app.route('/search', methods=['POST'])
 def search():
-    """search
-
-       Submission Endpoint for the Universal search form.
+    """Submission Endpoint for the Universal search form.
 
        :returns: If the search_form is valid will redirect to the results page
                  else with redirect to the page where they came from.
@@ -117,9 +106,7 @@ def search():
 
 @app.route('/snippet')
 def results():
-    """results
-
-       Results page for searches.
+    """Results page for searches.
 
        :results: If there is a query searches ElasticSearch and returns the
                  results. If there is no query returns the 10 most recently
@@ -141,9 +128,7 @@ def results():
 #-----------------------------------------------------------------------------#
 @app.route('/snippet/<int:id>')
 def get_snippet(id):
-    """get_snippet
-
-       Returns the page for an individual Snippet.
+    """Returns the page for an individual Snippet.
 
        :param id: The id of a Snippet.
 
@@ -155,9 +140,7 @@ def get_snippet(id):
 
 @app.route('/snippet/<int:id>/delete', methods=['GET', 'POST'])
 def delete_snippet(id):
-    """delete_snippet
-
-       Page for deleting Snippets.
+    """Page for deleting Snippets.
 
        :param id: The id of a Snippet.
 
@@ -183,9 +166,7 @@ def delete_snippet(id):
 
 @app.route('/snippet/<int:id>/edit', methods=['GET', 'POST'])
 def edit_snippet(id):
-    """edit_snippet
-
-       Page for editing Snippets.
+    """Page for editing Snippets.
 
        :param id: The id of a Snippet.
 
