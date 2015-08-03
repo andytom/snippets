@@ -94,5 +94,4 @@ def make_searchable(es_client, model):
     event.listen(model, 'after_update', index_item)
     event.listen(model, 'after_delete', delete_item)
 
-    # TODO - Work out a better way to search for results
     model.es_search = classmethod(partial(es_search, es_client=es_client))
