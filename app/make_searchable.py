@@ -41,25 +41,35 @@ def do_delete_item(es_client, model, item_id):
         pass
 
 
-def es_search(cls, es_client, q):
+def es_search(cls, es_client, **kwargs):
     """Search over the item
 
        :param es_client: The ElasticSearch client that we want to use for
                          searching.
-       :param q: The query in Lucene Query Language to search ElasticSearch
+       :param kwargs: The remaining kwargs are passed to the es_clinet.search
+                      function. If not set the index defaults to
+                      cls.__es_index__ and the doc_type defaults to
+                      cls.__es_doc_type__
 
-       :returns: A list containing the results of the search. Each result
-                 is a dict containing the id and indexed fields.
+       :returns: A tuple containg a list of the results of the search where
+                 each  result is a dict containing the id and indexed fields
+                 and the raw results from ElasticSearch.
     """
-    es_results = es_client.search(index=cls.__es_index__,
-                                  doc_type=cls.__es_doc_type__,
-                                  q=q)
+
+    search_kwargs = {
+        'index': cls.__es_index__,
+        'doc_type': cls.__es_doc_type__,
+    }
+
+    search_kwargs.update(kwargs)
+    es_results = es_client.search(search_kwargs)
+
     results = []
     for hit in es_results.get('hits', {}).get('hits', []):
         res = {'id': hit.get('_id')}
         res.update(hit.get('_source'))
         results.append(res)
-    return results
+    return results, es_results
 
 
 #-----------------------------------------------------------------------------#

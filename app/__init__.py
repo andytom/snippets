@@ -116,7 +116,7 @@ def results():
 
     if query:
         g.search_form.query.data = query
-        results = Snippet.es_search(q=query)
+        results, _ = Snippet.es_search(q=query)
         return render_template('results.html', results=results, query=query)
     else:
         results = Snippet.query.order_by(-Snippet.id).limit(10).all()
