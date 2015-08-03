@@ -44,6 +44,12 @@ You can run all the test locally using manage.py.
 $ ./manage.py test
 ~~~
 
+As well as test for pep8.
+
+~~~
+$ ./manage.py pep8
+~~~
+
 
 Database Management
 -------------------
@@ -56,7 +62,7 @@ $ ./manage.py db --help
 
 ElasticSearch Index Management
 ------------------------------
-The connection to ElasticSearch and the ElasticSearch Indexes can be managed using ~~~manage.py~~~.
+The connection to ElasticSearch and the ElasticSearch Indexes can be managed using manage.py.
 You can read the full help via:
 
 ~~~
@@ -87,7 +93,7 @@ TODO
 - [ ] Groups of snippets
 - [ ] Production Deployment instructions
 - [ ] Work out a better way to do searching
- - [ ] Snippet.es_search
+ - [x] Snippet.es_search
  - [ ] Moching out for testing
 - [ ] Look at duplication in templates
  - [ ] Rendering snippets
