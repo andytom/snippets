@@ -52,15 +52,15 @@ def es_search(cls, es_client, **kwargs):
                       cls.__es_doc_type__
 
        :returns: A tuple containg a list of the results of the search where
-                 each  result is a dict containing the id and indexed fields
+                 each result is a dict containing the id and '_source' fields
                  and the raw results from ElasticSearch.
     """
-
     search_kwargs = {
         'index': cls.__es_index__,
         'doc_type': cls.__es_doc_type__,
     }
 
+    # Merge the passed in kwargs over the defaults.
     search_kwargs.update(kwargs)
     es_results = es_client.search(**search_kwargs)
 
@@ -77,7 +77,7 @@ def es_search(cls, es_client, **kwargs):
 #-----------------------------------------------------------------------------#
 def make_searchable(es_client, model):
     """Take a SQLAlchemy database model and add hook to make sure it is
-       add, updated and remove for the Elastic Search Models. Also adds the
+       added, updated and remove for the Elastic Search Models. Also adds the
        classmehod 'es_search' for simple searching.
 
        :param es_client: A elasicsearch-py Elasticsearch object to use for the
