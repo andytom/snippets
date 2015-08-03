@@ -1,3 +1,4 @@
+from functools import partial
 import elasticsearch
 from sqlalchemy import event
 
@@ -40,20 +41,19 @@ def do_delete_item(es_client, model, item_id):
         pass
 
 
-# TODO - Work out a better way to search for results
-def es_search(cls, es, q):
+def es_search(cls, es_client, q):
     """Search over the item
 
-       :param es: The ElasticSearch client that we want to use for
-                  searching.
+       :param es_client: The ElasticSearch client that we want to use for
+                         searching.
        :param q: The query in Lucene Query Language to search ElasticSearch
 
        :returns: A list containing the results of the search. Each result
-                 is a dict containing the id, title and text of the Snippet
+                 is a dict containing the id and indexed fields.
     """
-    es_results = es.search(index=cls.__es_index__,
-                           doc_type=cls.__es_doc_type__,
-                           q=q)
+    es_results = es_client.search(index=cls.__es_index__,
+                                  doc_type=cls.__es_doc_type__,
+                                  q=q)
     results = []
     for hit in es_results.get('hits', {}).get('hits', []):
         res = {'id': hit.get('_id')}
@@ -67,7 +67,8 @@ def es_search(cls, es, q):
 #-----------------------------------------------------------------------------#
 def make_searchable(es_client, model):
     """Take a SQLAlchemy database model and add hook to make sure it is
-       add, updated and remove for the Elastic Search Models.
+       add, updated and remove for the Elastic Search Models. Also adds the
+       classmehod 'es_search' for simple searching.
 
        :param es_client: A elasicsearch-py Elasticsearch object to use for the
                          interactions with ElasticSearch.
@@ -83,4 +84,5 @@ def make_searchable(es_client, model):
     event.listen(model, 'after_update', index_item)
     event.listen(model, 'after_delete', delete_item)
 
-    model.es_search = classmethod(es_search)
+    # TODO - Work out a better way to search for results
+    model.es_search = classmethod(partial(es_search, es_client=es_client))
