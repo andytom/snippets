@@ -18,8 +18,10 @@ and a database of your choice for storage.
 Running Snippets
 ----------------
 You can get Snippets up and running on [localhost:5000](http://localhost:5000/)
-using the following instructions. The following assumes you have python,
-pip, virtualenv, and virtualenvwrapper installed.
+using the following instructions. The following assumes you have [git](https://git-scm.com/),
+[python](https://www.python.org/), [pip](https://docs.python.org/2.7/installing/),
+[virtualenv](https://virtualenv.pypa.io/en/latest/),
+and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/) installed.
 
 It also assumes that you have ElasticSearch installed and listening
 on ```localhost:9200```. For more information about setting up ElasticSearch
@@ -44,6 +46,12 @@ You can run all the test locally using manage.py.
 $ ./manage.py test
 ~~~
 
+As well as test for pep8.
+
+~~~
+$ ./manage.py pep8
+~~~
+
 
 Database Management
 -------------------
@@ -52,6 +60,15 @@ You can read the full help via:
 
 ~~~
 $ ./manage.py db --help
+~~~
+
+ElasticSearch Index Management
+------------------------------
+The connection to ElasticSearch and the ElasticSearch Indexes can be managed using manage.py.
+You can read the full help via:
+
+~~~
+$ ./manage.py es --help
 ~~~
 
 
@@ -63,12 +80,7 @@ TODO
 - [x] Automate pep8 testing
 - [x] Syntax highlighing
 - [x] Manage commands for the database
-- [ ] Manage commands for the index
- - [ ] Reindex all items
- - [ ] Reindex some items
- - [ ] Delete some items
- - [ ] Delete all items
- - [ ] Complete rebuild
+- [x] Manage commands for the index
 - [ ] Add users and permissions
  - [ ] Add user registration, login, log out
  - [ ] Must be logged in to create
@@ -83,10 +95,13 @@ TODO
 - [ ] Groups of snippets
 - [ ] Production Deployment instructions
 - [ ] Work out a better way to do searching
- - [ ] Snippet.es_search
+ - [x] Snippet.es_search
  - [ ] Moching out for testing
+ - [ ] Return list of Snippets?
 - [ ] Look at duplication in templates
  - [ ] Rendering snippets
+- [ ] Tests for make_searchable
+- [ ] Logging
 
 License
 -------
