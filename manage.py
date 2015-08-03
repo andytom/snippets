@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+    manage.py
+    ~~~~~~~~~
+    Mangement commands for Snippets.
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 import os
 import sys

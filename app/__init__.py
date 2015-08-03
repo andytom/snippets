@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Snippets
+    ~~~~~~~~
+    Snippets is a small note taking application.
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 import os
 from flask import Flask, request, render_template, redirect, url_for, g, flash
@@ -115,7 +124,11 @@ def results():
     query = request.args.get('q')
 
     if query:
+        # Set the form search field to match the query so that the form is
+        # completed on the results page.
         g.search_form.query.data = query
+
+        # Construct the query to be passed to ElasticSearch.
         body = {
             "query": {
                 "query_string": {

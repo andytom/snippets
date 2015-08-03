@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Management
+    ~~~~~~~~~~
+    Custom Flask Script management commands for Snippets
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 from flask.ext.script import Manager, prompt_bool
 from app import es, Snippet

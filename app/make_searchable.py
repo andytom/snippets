@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Make Searchable
+    ~~~~~~~~~~~~~~~
+    Helper methods to make updating SQLAlchemy models indexed in ElasticSearch
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from functools import partial
 import elasticsearch
 from sqlalchemy import event

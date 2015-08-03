@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Snippets
+    ~~~~~~~~
+    All test cases relating to Snippets
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 import unittest
 from app import Snippet, es

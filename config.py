@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Config
+    ~~~~~~
+    All the different config for each environment
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 import os
 

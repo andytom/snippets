@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Forms
+    ~~~~~
+    Custom WTForms for Snippets
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField

@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Validation
+    ~~~~~~~~~~
+    All test cases relating to form validation
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 import unittest
 from base import BaseTestCase
