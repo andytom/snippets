@@ -62,7 +62,7 @@ def es_search(cls, es_client, **kwargs):
     }
 
     search_kwargs.update(kwargs)
-    es_results = es_client.search(search_kwargs)
+    es_results = es_client.search(**search_kwargs)
 
     results = []
     for hit in es_results.get('hits', {}).get('hits', []):
