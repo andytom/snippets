@@ -36,7 +36,7 @@ manager.add_command('es', es_manager)
 # Shell
 #-----------------------------------------------------------------------------#
 def _make_context():
-    """_make_context
+    """Function to declare all the objects to import into the shell.
 
        :returns: A dict of objects to import in the shell
     """
