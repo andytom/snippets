@@ -18,8 +18,10 @@ and a database of your choice for storage.
 Running Snippets
 ----------------
 You can get Snippets up and running on [localhost:5000](http://localhost:5000/)
-using the following instructions. The following assumes you have python,
-pip, virtualenv, and virtualenvwrapper installed.
+using the following instructions. The following assumes you have [git](https://git-scm.com/),
+[python](https://www.python.org/), [pip](https://docs.python.org/2.7/installing/),
+[virtualenv](https://virtualenv.pypa.io/en/latest/),
+and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/) installed.
 
 It also assumes that you have ElasticSearch installed and listening
 on ```localhost:9200```. For more information about setting up ElasticSearch
