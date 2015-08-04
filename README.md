@@ -5,7 +5,7 @@ Snippets
 
 Overview
 --------
-Snippets is a simple Note taking application with Full Text Search.
+Snippets is a simple note taking application with Full Text Search.
 
 It is based on the Python [Flask framework](http://flask.pocoo.org/), uses
 [Bootstrap](http://getbootstrap.com/) to look nice,
