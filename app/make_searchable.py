@@ -7,6 +7,7 @@
     :copyright: (c) 2015 by Thomas O'Donnell.
     :license: MIT, see LICENSE for more details.
 """
+from __future__ import unicode_literals
 from functools import partial
 import elasticsearch
 from sqlalchemy import event
