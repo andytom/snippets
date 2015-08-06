@@ -93,7 +93,7 @@ TODO
 - [ ] Work out a better way to do searching
  - [x] Snippet.es_search
  - [ ] Moching out for testing
- - [ ] Return list of Snippets?
+ - [x] Return list of Snippets
 - [ ] Look at duplication in templates
  - [ ] Rendering snippets
 - [ ] Tests for make_searchable

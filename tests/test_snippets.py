@@ -134,11 +134,15 @@ class SnippetTestCase(BaseTestCase):
         """
         snippet = self._make_snippet(title='Test Title', text='Test Text')
 
-        make_fake_search({'hits': {'hits': [{'_id': snippet.id,
+        make_fake_search({'hits': {'hits': [{
+                                            '_id': unicode(snippet.id),
                                             '_source': {
                                                 'title': snippet.title,
                                                 'text': snippet.text,
-                                            }}]}})
+                                            }
+                                            }]
+                                   }
+                          })
 
         rv = self.app.get('/snippet?q=Test')
 
