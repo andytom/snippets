@@ -27,6 +27,7 @@ class BaseConfig(object):
     # >>> import os
     # >>> os.urandom(24)
     SECRET_KEY = 'DEFAULT'
+    ELASTICSEARCH_HOST = os.environ.get('ELASTICSEARCH_HOST', 'localhost:9200')
 
 
 class TestConfig(BaseConfig):
