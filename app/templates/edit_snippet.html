@@ -24,7 +24,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 {%- if snippet %}
-    {%- set cancel_url = url_for('get_snippet', id=snippet.id) %}
+    {%- set cancel_url = url_for('snippet.get_snippet', id=snippet.id) %}
 {%- else %}
     {%- set cancel_url = url_for('index') %}
 {%- endif %}
