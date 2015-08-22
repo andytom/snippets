@@ -26,3 +26,17 @@ class BaseTestCase(unittest.TestCase):
     def tearDown(self):
         self.db.session.remove()
         self.db.drop_all()
+
+    def _make_item(self, item_class, **item_kwargs):
+        """Function for generating users
+
+           :param item_class: The class of the items to create
+           :param **item_kwargs: The params used to create the item these are
+                                 passed to the item as kwargs
+
+           :returns: A new item that has been added to the database
+        """
+        item = item_class(**item_kwargs)
+        self.db.session.add(item)
+        self.db.session.commit()
+        return item

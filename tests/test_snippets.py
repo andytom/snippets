@@ -51,7 +51,7 @@ class NoSnippetsTestCase(BaseTestCase):
 
     def test_create_a_snippet(self):
         """Test that we can get the page to create a new Snippet"""
-        rv = self.app.get('/new')
+        rv = self.app.get('/snippet/new')
         self.assertEqual(rv.status_code, 200)
 
     def test_index(self):
@@ -71,13 +71,13 @@ class NoSnippetsTestCase(BaseTestCase):
         """
         make_fake_search({})
 
-        rv = self.app.get('/snippet?q=test')
+        rv = self.app.get('/snippet/?q=test')
         self.assertEqual(rv.status_code, 200)
         self.assertIn('No results for query', rv.data)
 
     def test_search_no_query(self):
         """Test that we get the correct answer when there is no query."""
-        rv = self.app.get('/snippet')
+        rv = self.app.get('/snippet/')
         self.assertEqual(rv.status_code, 200)
         self.assertIn("There are no snippets.", rv.data)
 
@@ -85,23 +85,11 @@ class NoSnippetsTestCase(BaseTestCase):
 class SnippetTestCase(BaseTestCase):
     """Test Case for all tests when Snippets have been added"""
 
-    def _make_snippet(self, **snippet_args):
-        """Function for generating snippets
-
-           :params: All Parameters are passed to create the Snippet
-
-           :returns: A Snippet created with the args passed to the params
-        """
-        snippet = Snippet(**snippet_args)
-        self.db.session.add(snippet)
-        self.db.session.commit()
-        return snippet
-
     def test_create_snippet(self):
         """Test the creation of a snippet"""
         data = {'title': 'Test Title',
                 'text': 'Test Text'}
-        rv = self.app.post('/new', data=data)
+        rv = self.app.post('/snippet/new', data=data)
 
         # There will only be one snippet.
         snippet = Snippet.query.all()[0]
@@ -110,7 +98,7 @@ class SnippetTestCase(BaseTestCase):
 
     def test_snippet_update(self):
         """Test updating a snippet."""
-        snippet = self._make_snippet(title='Test Title', text='Test Text')
+        snippet = self._make_item(Snippet, title='Title', text='Text')
 
         data = {'title': 'Test Title Update',
                 'text': 'Test Text Update'}
@@ -122,7 +110,7 @@ class SnippetTestCase(BaseTestCase):
 
     def test_snippet_delete(self):
         """Test deleting a snippet"""
-        snippet = self._make_snippet(title='Test Title', text='Test Text')
+        snippet = self._make_item(Snippet, title='Title', text='Text')
 
         rv = self.app.post('/snippet/{}/delete'.format(snippet.id))
 
@@ -132,7 +120,7 @@ class SnippetTestCase(BaseTestCase):
         """Test that a valid search returns a result and the returned result is
            processed correctly
         """
-        snippet = self._make_snippet(title='Test Title', text='Test Text')
+        snippet = self._make_item(Snippet, title='Title', text='Text')
 
         make_fake_search({'hits': {'hits': [{
                                             '_id': unicode(snippet.id),
@@ -144,7 +132,7 @@ class SnippetTestCase(BaseTestCase):
                                    }
                           })
 
-        rv = self.app.get('/snippet?q=Test')
+        rv = self.app.get('/snippet/?q=Test')
 
         self.assertEqual(rv.status_code, 200)
         self.assertIn(snippet.title, rv.data)
@@ -153,11 +141,11 @@ class SnippetTestCase(BaseTestCase):
 
     def test_search_without_results(self):
         """Test that an invalid search doesn't return resutls."""
-        snippet = self._make_snippet(title='Test Title', text='Test Text')
+        snippet = self._make_item(Snippet, title='Title', text='Text')
 
         make_fake_search({})
 
-        rv = self.app.get('/snippet?q=aaaaaaaaa')
+        rv = self.app.get('/snippet/?q=aaaaaaaaa')
 
         self.assertEqual(rv.status_code, 200)
         self.assertIn('No results for query', rv.data)
