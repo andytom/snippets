@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+    manage.py
+    ~~~~~~~~~
+    Mangement commands for Snippets.
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 import os
 import sys
@@ -36,7 +45,7 @@ manager.add_command('es', es_manager)
 # Shell
 #-----------------------------------------------------------------------------#
 def _make_context():
-    """_make_context
+    """Function to declare all the objects to import into the shell.
 
        :returns: A dict of objects to import in the shell
     """

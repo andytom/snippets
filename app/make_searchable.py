@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Make Searchable
+    ~~~~~~~~~~~~~~~
+    Helper methods to make updating SQLAlchemy models indexed in ElasticSearch
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from functools import partial
 import elasticsearch
 from sqlalchemy import event
@@ -41,35 +50,42 @@ def do_delete_item(es_client, model, item_id):
         pass
 
 
-def es_search(cls, es_client, **kwargs):
+def es_search(cls, es_client, **search_kwargs):
     """Search over the item
 
        :param es_client: The ElasticSearch client that we want to use for
                          searching.
-       :param kwargs: The remaining kwargs are passed to the es_clinet.search
-                      function. If not set the index defaults to
-                      cls.__es_index__ and the doc_type defaults to
-                      cls.__es_doc_type__
+       :param **search_kwargs: The remaining kwargs are passed to the
+                               es_clinet.search function. The index is always
+                               set to cls.__es_index__ and the doc_type is set
+                               to cls.__es_doc_type__.
 
-       :returns: A tuple containg a list of the results of the search where
-                 each  result is a dict containing the id and indexed fields
-                 and the raw results from ElasticSearch.
+       :returns: A list of the results objects
     """
-
-    search_kwargs = {
+    DEFAULTS = {
         'index': cls.__es_index__,
         'doc_type': cls.__es_doc_type__,
     }
 
-    search_kwargs.update(kwargs)
-    es_results = es_client.search(**search_kwargs)
+    # Overwrite with the fixed values
+    search_kwargs.update(DEFAULTS)
 
-    results = []
-    for hit in es_results.get('hits', {}).get('hits', []):
-        res = {'id': hit.get('_id')}
-        res.update(hit.get('_source'))
-        results.append(res)
-    return results, es_results
+    # Get our results from ES
+    es_results = es_client.search(**search_kwargs)
+    hits = es_results.get('hits', {}).get('hits', [])
+    ids = [hit['_id'] for hit in hits]
+
+    # Return [] if there are no resutls
+    if not ids:
+        return []
+
+    # Fetch all the results from the database then order them to match the
+    # resutls that we got from ES
+    results = list(cls.query.filter(cls.id.in_(ids)).all())
+
+    results.sort(key=lambda item: ids.index(unicode(item.id)))
+
+    return results
 
 
 #-----------------------------------------------------------------------------#
@@ -77,7 +93,7 @@ def es_search(cls, es_client, **kwargs):
 #-----------------------------------------------------------------------------#
 def make_searchable(es_client, model):
     """Take a SQLAlchemy database model and add hook to make sure it is
-       add, updated and remove for the Elastic Search Models. Also adds the
+       added, updated and remove for the Elastic Search Models. Also adds the
        classmehod 'es_search' for simple searching.
 
        :param es_client: A elasicsearch-py Elasticsearch object to use for the

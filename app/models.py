@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Models
+    ~~~~~~
+    SQLAlchemy Models for Snippets
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 from flask.ext.sqlalchemy import SQLAlchemy
 

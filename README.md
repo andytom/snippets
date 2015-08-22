@@ -3,17 +3,14 @@ Snippets
 
 [![Build Status](https://travis-ci.org/andytom/snippets.svg?branch=master)](https://travis-ci.org/andytom/snippets)
 
-
 Overview
 --------
-
-Snippets is a simple Note taking application with Full Text Search.
+Snippets is a simple note taking application with Full Text Search.
 
 It is based on the Python [Flask framework](http://flask.pocoo.org/), uses
 [Bootstrap](http://getbootstrap.com/) to look nice,
 [ElasticSearch](https://www.elastic.co/products/elasticsearch) for searching
 and a database of your choice for storage.
-
 
 Running Snippets
 ----------------
@@ -71,7 +68,6 @@ You can read the full help via:
 $ ./manage.py es --help
 ~~~
 
-
 TODO
 ----
 - [x] Write a README
@@ -97,7 +93,7 @@ TODO
 - [ ] Work out a better way to do searching
  - [x] Snippet.es_search
  - [ ] Moching out for testing
- - [ ] Return list of Snippets?
+ - [x] Return list of Snippets
 - [ ] Look at duplication in templates
  - [ ] Rendering snippets
 - [ ] Tests for make_searchable

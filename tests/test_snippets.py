@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Snippets
+    ~~~~~~~~
+    All test cases relating to Snippets
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 import unittest
 from app import Snippet, es
@@ -125,11 +134,15 @@ class SnippetTestCase(BaseTestCase):
         """
         snippet = self._make_snippet(title='Test Title', text='Test Text')
 
-        make_fake_search({'hits': {'hits': [{'_id': snippet.id,
+        make_fake_search({'hits': {'hits': [{
+                                            '_id': unicode(snippet.id),
                                             '_source': {
                                                 'title': snippet.title,
                                                 'text': snippet.text,
-                                            }}]}})
+                                            }
+                                            }]
+                                   }
+                          })
 
         rv = self.app.get('/snippet?q=Test')
 

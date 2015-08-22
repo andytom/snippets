@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    Config
+    ~~~~~~
+    All the different config for each environment
+
+    :copyright: (c) 2015 by Thomas O'Donnell.
+    :license: MIT, see LICENSE for more details.
+"""
 from __future__ import unicode_literals
 import os
 
@@ -18,6 +27,7 @@ class BaseConfig(object):
     # >>> import os
     # >>> os.urandom(24)
     SECRET_KEY = 'DEFAULT'
+    ELASTICSEARCH_HOST = os.environ.get('ELASTICSEARCH_HOST', 'localhost:9200')
 
 
 class TestConfig(BaseConfig):
