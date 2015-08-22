@@ -49,6 +49,12 @@ class NoSnippetsTestCase(BaseTestCase):
         rv = self.app.get('/search')
         self.assertEqual(rv.status_code, 405)
 
+    def test_search_redirect(self):
+        """Test that we get redirected correctly when posting to search"""
+        data = {'query': 'test'}
+        rv = self.app.post('/search', data=data, follow_redirects=True)
+        self.assertIn('No results for query', rv.data)
+
     def test_create_a_snippet(self):
         """Test that we can get the page to create a new Snippet"""
         rv = self.app.get('/snippet/new')
