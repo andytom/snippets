@@ -89,6 +89,17 @@ def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
 
+@app.errorhandler(500)
+def internal_error(error):
+    """Generic 500 error page.
+
+       :param error: An exception from the error.
+       :returns: The rendered 500 error page.
+    """
+    db.session.rollback()
+    return render_template('internal_error.html'), 500
+
+
 #-----------------------------------------------------------------------------#
 # Views - General Pages
 #-----------------------------------------------------------------------------#
