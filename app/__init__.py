@@ -11,13 +11,14 @@ from __future__ import unicode_literals
 import os
 from flask import Flask, request, render_template, redirect, url_for, g, flash
 from flask.ext.elasticsearch import FlaskElasticsearch
+from flask.ext.login import LoginManager
 from flask.ext.migrate import Migrate
 from flask.ext.misaka import Misaka
 
 from forms import Search_Form
 from make_searchable import make_searchable
-from models import db, Snippet
-from views import snippet
+from models import db, Snippet, User
+from views import snippet, login
 
 
 #-----------------------------------------------------------------------------#
@@ -33,6 +34,24 @@ db.init_app(app)
 es = FlaskElasticsearch(app)
 Migrate(app, db)
 make_searchable(es, Snippet)
+
+
+# Login stuff
+login_manager = LoginManager(app)
+login_manager.login_view = "login.login"
+login_manager.login_message = "Please login"
+login_manager.login_message_category = "alert-warning"
+
+
+@login_manager.user_loader
+def load_user(userid):
+    """User loader for flask-login
+
+       :param userid: It passed in from login_manager
+
+       :returns: A User object if one exists returns None otherwise.
+    """
+    return User.query.get(userid)
 
 
 # Front end stuff
@@ -54,6 +73,7 @@ def before_request():
 # Blueprints
 #-----------------------------------------------------------------------------#
 app.register_blueprint(snippet.mod)
+app.register_blueprint(login.mod)
 
 
 #-----------------------------------------------------------------------------#
