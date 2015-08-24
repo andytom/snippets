@@ -97,6 +97,13 @@ def make_searchable(es_client, model):
        added, updated and remove for the Elastic Search Models. Also adds the
        classmehod 'es_search' for simple searching.
 
+       Requires that the model has '__es_index__', '__es_doc_type__' and
+       '__es_fields__' atributes. Where:
+       * '__es_index__' is the ElasticSearch index this model should be added
+         to.
+       * '__es_doc_type__' is the Docuemnt type for this model.
+       * '__es_fields__' is a list of fields to be included in the index.
+
        :param es_client: A elasicsearch-py Elasticsearch object to use for the
                          interactions with ElasticSearch.
        :param model: The SQLAlchemy database model to make searchable.
