@@ -28,7 +28,7 @@ class BaseTestCase(unittest.TestCase):
         self.db.drop_all()
 
     def _make_item(self, item_class, **item_kwargs):
-        """Function for generating users
+        """Function for generating items
 
            :param item_class: The class of the items to create
            :param **item_kwargs: The params used to create the item these are
@@ -40,3 +40,24 @@ class BaseTestCase(unittest.TestCase):
         self.db.session.add(item)
         self.db.session.commit()
         return item
+
+    def login(self, username, password):
+        """Function for doing login
+
+           :param username: The username of the user to login
+           :param username: The password of the user to login
+
+           :returns: A logged in app session
+        """
+        data = {
+            'username': 'name',
+            'password': 'password'
+        }
+        return self.app.post('/login', data=data, follow_redirects=True)
+
+    def logout(self):
+        """Function for doing logout
+
+           :returns: A logged out app session
+        """
+        return self.app.get('/logout', follow_redirects=True)
