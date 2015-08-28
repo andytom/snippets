@@ -52,7 +52,7 @@ def do_delete_item(es_client, model, item_id):
 
 
 def es_search(cls, es_client, **search_kwargs):
-    """Search over the item
+    """Search in ElasticSearch for this item.
 
        :param es_client: The ElasticSearch client that we want to use for
                          searching.
@@ -71,17 +71,20 @@ def es_search(cls, es_client, **search_kwargs):
     # Overwrite with the fixed values
     search_kwargs.update(DEFAULTS)
 
-    # Get our results from ES
+    # Get our ordered results from ES
     es_results = es_client.search(**search_kwargs)
     hits = es_results.get('hits', {}).get('hits', [])
     ids = [hit['_id'] for hit in hits]
 
-    # Return [] if there are no resutls
+    # Bail out early if we got no ids back
     if not ids:
         return []
 
     # Fetch all the results from the database then order them to match the
-    # resutls that we got from ES
+    # resutls that we got from ElasticSearch
+    #
+    # We need to use the unicode of the item.id when searching since
+    # ElasticSearch returns the id a unicode string even if it is an int.
     results = list(cls.query.filter(cls.id.in_(ids)).all())
 
     results.sort(key=lambda item: ids.index(unicode(item.id)))
