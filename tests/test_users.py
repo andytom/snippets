@@ -42,7 +42,7 @@ class UsersModelTestCase(BaseTestCase):
         self.assertRaises(IntegrityError, self._make_item, **user_kwargs)
 
 
-class NoUserTestCase(BaseTestCase):
+class UserTestCase(BaseTestCase):
     "Tests for Logging a user in"
 
     def test_login_user(self):
@@ -66,3 +66,31 @@ class NoUserTestCase(BaseTestCase):
         rv = self.login('name', 'password')
         rv = self.logout()
         self.assertIn('You have been logged out', rv.data)
+
+    def test_create_user(self):
+        "Test that we can create a user"
+        data = {
+            'username': 'test_username',
+            'password': 'passw0rd!',
+            'confirm': 'passw0rd!'
+        }
+
+        rv = self.app.post('/user/new', data=data, follow_redirects=True)
+        self.assertIn(data['username'], rv.data)
+
+        user = User.query.all()[0]
+        self.assertEqual(user.username, data['username'])
+        self.assertTrue(user.check_password(data['password']))
+
+    def test_user_page(self):
+        "Test that we can get a user page"
+        user = self._make_item(User, username='name', password='password')
+
+        rv = self.app.get('/user/{}'.format(user.id))
+        self.assertIn(user.username, rv.data)
+
+    def test_404_no_user(self):
+        "Test that we get a 404 when there is no user"
+
+        rv = self.app.get('/user/1')
+        self.assertEqual(404, rv.status_code)

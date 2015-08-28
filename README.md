@@ -79,7 +79,7 @@ TODO
 - [x] Manage commands for the index
 - [ ] Add users and permissions
  - [x] Add user login, log out
- - [ ] Add user registration and account page
+ - [x] Add user registration and account page
  - [ ] Must be logged in to create
  - [ ] Only user or admin can delete or edit
  - [ ] Shared/not shared snippets?
