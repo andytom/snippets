@@ -68,6 +68,16 @@ class Confirm_Form(Form):
     pass
 
 
+class User_Form(Form):
+    """A Form for creating User"""
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm = PasswordField('Confirm Password',
+                            validators=[DataRequired(),
+                                        EqualTo('password',
+                                        message='Passwords must match')])
+
+
 class Login_Form(Redirect_Form):
     """A Form for logining Users in"""
     username = StringField('Username', validators=[DataRequired()])

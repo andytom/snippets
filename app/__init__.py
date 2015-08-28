@@ -18,7 +18,7 @@ from flask.ext.misaka import Misaka
 from forms import Search_Form
 from make_searchable import make_searchable
 from models import db, Snippet, User
-from views import snippet, login
+from views import snippet, login, user
 
 
 #-----------------------------------------------------------------------------#
@@ -72,8 +72,9 @@ def before_request():
 #-----------------------------------------------------------------------------#
 # Blueprints
 #-----------------------------------------------------------------------------#
-app.register_blueprint(snippet.mod)
 app.register_blueprint(login.mod)
+app.register_blueprint(snippet.mod)
+app.register_blueprint(user.mod)
 
 
 #-----------------------------------------------------------------------------#
