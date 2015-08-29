@@ -54,13 +54,13 @@ class Redirect_Form(Form):
 #-----------------------------------------------------------------------------#
 class Snippit_Form(Form):
     """A Form for creating or editing Snippets"""
-    title = StringField('title', validators=[DataRequired()])
-    text = TextAreaField('text', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
+    text = TextAreaField('Text', validators=[DataRequired()])
 
 
 class Search_Form(Form):
     """A Form for Search Queries"""
-    query = StringField('query', validators=[DataRequired()])
+    query = StringField('Query', validators=[DataRequired()])
 
 
 class Confirm_Form(Form):
