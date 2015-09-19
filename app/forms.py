@@ -49,23 +49,23 @@ class Redirect_Form(Form):
 
 #-- Forms --------------------------------------------------------------------#
 class Snippit_Form(Form):
-    """A Form for creating or editing Snippets"""
+    "A Form for creating or editing Snippets"
     title = StringField('Title', validators=[DataRequired()])
     text = TextAreaField('Text', validators=[DataRequired()])
 
 
 class Search_Form(Form):
-    """A Form for Search Queries"""
+    "A Form for Search Queries"
     query = StringField('Query', validators=[DataRequired()])
 
 
 class Confirm_Form(Form):
-    """A Form for simple yes/no questions"""
+    "A Form for simple yes/no questions"
     pass
 
 
 class User_Form(Form):
-    """A Form for creating User"""
+    "A Form for creating User"
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm = PasswordField('Confirm Password',
@@ -75,6 +75,6 @@ class User_Form(Form):
 
 
 class Login_Form(Redirect_Form):
-    """A Form for logining Users in"""
+    "A Form for logining Users in"
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
