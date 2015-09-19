@@ -80,7 +80,7 @@ TODO
 - [x] Add users
  - [x] Add user login, log out
  - [x] Add user registration and account page
- - [ ] Manage commands for Users
+ - [x] Manage commands for Users
 - [ ] Add permissions
  - [ ] Must be logged in to create
  - [ ] Only user or admin can delete or edit

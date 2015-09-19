@@ -16,7 +16,7 @@ import unittest
 from flask.ext.script import Manager, Server, Shell
 from flask.ext.migrate import MigrateCommand
 from app import app, db, es
-from app.management import es_manager
+from app.management import es_manager, user_manager
 from app.models import Snippet, User
 
 
@@ -37,9 +37,15 @@ manager.add_command('db', MigrateCommand)
 
 
 #-----------------------------------------------------------------------------#
-# ElasticSearch Manage
+# ElasticSearch Management
 #-----------------------------------------------------------------------------#
 manager.add_command('es', es_manager)
+
+
+#-----------------------------------------------------------------------------#
+# User Management
+#-----------------------------------------------------------------------------#
+manager.add_command('user', user_manager)
 
 
 #-----------------------------------------------------------------------------#
