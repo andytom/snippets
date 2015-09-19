@@ -77,13 +77,14 @@ TODO
 - [x] Syntax highlighing
 - [x] Manage commands for the database
 - [x] Manage commands for the index
-- [ ] Add users and permissions
+- [x] Add users
  - [x] Add user login, log out
  - [x] Add user registration and account page
+ - [ ] Manage commands for Users
+- [ ] Add permissions
  - [ ] Must be logged in to create
  - [ ] Only user or admin can delete or edit
  - [ ] Shared/not shared snippets?
- - [ ] Manage commands/Admin Page for Users
 - [ ] Replce index with a landing page
 - [ ] Add help pages
  - [ ] What Markdown is supported
@@ -102,6 +103,7 @@ TODO
  - [ ] Rendering forms
 - [ ] Tests for make_searchable
 - [ ] Logging
+- [ ] Admin Page for Users
 
 License
 -------
