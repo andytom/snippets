@@ -1,0 +1,7 @@
+{%- set title = snippet.title %}
+{%- import 'macros.html' as macros %}
+{%- extends "base.html" %}
+
+{%- block content %}
+  {{ macros.snippet_panel(snippet, edit=True) }}
+{%- endblock %}

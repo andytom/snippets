@@ -18,9 +18,7 @@ from app.forms import Confirm_Form, Snippit_Form
 mod = Blueprint('snippet', __name__, url_prefix='/snippet')
 
 
-#-----------------------------------------------------------------------------#
-# Views - General Pages
-#-----------------------------------------------------------------------------#
+#-- Views - General Pages ----------------------------------------------------#
 @mod.route('/')
 def results():
     """Results page for searches.
@@ -46,7 +44,9 @@ def results():
         }
 
         results = Snippet.es_search(body=body)
-        return render_template('results.html', results=results, query=query)
+        return render_template('snippets/results.html',
+                               results=results,
+                               query=query)
     else:
         results = Snippet.query.order_by(-Snippet.id).limit(10).all()
         return render_template('index.html', results=results)
@@ -71,12 +71,10 @@ def new_snippet():
               'alert-success')
         return redirect(url_for('.get_snippet', id=new_snippet.id))
 
-    return render_template('edit_snippet.html', form=form)
+    return render_template('snippets/edit_snippet.html', form=form)
 
 
-#-----------------------------------------------------------------------------#
-# Individual Snippets
-#-----------------------------------------------------------------------------#
+#-- Individual Snippet -------------------------------------------------------#
 @mod.route('/<int:id>')
 def get_snippet(id):
     """Returns the page for an individual Snippet.
@@ -86,7 +84,7 @@ def get_snippet(id):
        :resutls: If the id is valid returns the page for the Snippet.
     """
     snippet = Snippet.query.get_or_404(id)
-    return render_template('snippet.html', snippet=snippet)
+    return render_template('snippets/snippet.html', snippet=snippet)
 
 
 @mod.route('/<int:id>/delete', methods=['GET', 'POST'])
@@ -138,4 +136,6 @@ def edit_snippet(id):
 
     form.title.data = snippet.title
     form.text.data = snippet.text
-    return render_template('edit_snippet.html', form=form, snippet=snippet)
+    return render_template('snippets/edit_snippet.html',
+                           form=form,
+                           snippet=snippet)

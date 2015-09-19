@@ -1,0 +1,14 @@
+{%- set title = query %}
+{%- extends "base.html" %}
+{%- import 'macros.html' as macros %}
+
+{%- block content %}
+{%- if results %}
+  <h4>Results for query <strong>{{ query }}</strong></h4>
+  {%- for result in results %}
+      {{ macros.snippet_panel(result, truncate=True) }}
+  {%- endfor %}
+{%- else %}
+  <h4>No results for query <strong>{{ query }}</strong></h4>
+{%- endif %}
+{%- endblock %}

@@ -1,0 +1,13 @@
+{%- extends "base.html" %}
+{%- import 'macros.html' as macros %}
+
+{%- block content %}
+<form role="form" method="post">
+  {{ form.hidden_tag() }}
+  {{ macros.input(form.username) }}
+  {{ macros.input(form.password) }}
+  {{ macros.input(form.confirm) }}
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="{{ url_for('index') }}"><button type="button" class="btn btn-default">Cancel</button></a>
+</form>
+{%- endblock %}

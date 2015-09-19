@@ -1,0 +1,18 @@
+{%- extends "base.html" %}
+{%- import 'macros.html' as macros %}
+
+{%- if snippet %}
+    {%- set cancel_url = url_for('snippet.get_snippet', id=snippet.id) %}
+{%- else %}
+    {%- set cancel_url = url_for('index') %}
+{%- endif %}
+
+{%- block content %}
+<form role="form" method="post">
+  {{ form.hidden_tag() }}
+  {{ macros.input(form.title) }}
+  {{ macros.input(form.text, rows=20) }}
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="{{ cancel_url }}"><button type="button" class="btn btn-default">Cancel</button></a>
+</form>
+{%- endblock %}

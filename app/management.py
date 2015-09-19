@@ -8,20 +8,15 @@
     :license: MIT, see LICENSE for more details.
 """
 from __future__ import unicode_literals
-from flask.ext.script import Manager, prompt_bool
-from app import es, Snippet
+from flask.ext.script import Manager, prompt_bool, prompt_pass
+from app import es, Snippet, User, db
 from make_searchable import do_index_item, do_delete_item
 
 
-#-----------------------------------------------------------------------------#
-# Manager setup
-#-----------------------------------------------------------------------------#
+#-- ES Management commands ---------------------------------------------------#
 es_manager = Manager(usage="Perform ElasticSearch Operations")
 
 
-#-----------------------------------------------------------------------------#
-# Management commands
-#-----------------------------------------------------------------------------#
 @es_manager.command
 def ping():
     "Test the connection to ElasticSearch"
@@ -65,3 +60,35 @@ def rebuild():
             do_index_item(es, snippet)
             print "Snippet '{} - {}' has been reindexed".format(snippet.id,
                                                                 snippet.title)
+
+
+#-- User Management commands -------------------------------------------------#
+user_manager = Manager(usage="Manage Users")
+
+
+@user_manager.command
+def add(username):
+    "Add a new user"
+    if User.query.filter_by(username=username).first():
+        print "There is already a user with the username {}".format(username)
+    else:
+        password = prompt_pass('Password')
+        confirm = prompt_pass('Confirm Password')
+        if password == confirm:
+            user = User(username, password)
+            db.session.add(user)
+            db.session.commit()
+            print "Created user {}".format(user.username)
+        else:
+            print "Passwords don't match"
+
+
+@user_manager.command
+def delete(username):
+    "Delete a user"
+    if prompt_bool("Are you sure you want to delete {}".format(username)):
+        user = User.query.filter_by(username=username).first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            print "User '{}' deleted".format(username)

@@ -11,18 +11,17 @@ from __future__ import unicode_literals
 import os
 from flask import Flask, request, render_template, redirect, url_for, g, flash
 from flask.ext.elasticsearch import FlaskElasticsearch
+from flask.ext.login import LoginManager
 from flask.ext.migrate import Migrate
 from flask.ext.misaka import Misaka
 
 from forms import Search_Form
 from make_searchable import make_searchable
-from models import db, Snippet
-from views import snippet
+from models import db, Snippet, User
+from views import snippet, login, user
 
 
-#-----------------------------------------------------------------------------#
-# Config
-#-----------------------------------------------------------------------------#
+#-- Config -------------------------------------------------------------------#
 app = Flask(__name__)
 app.config.from_object(os.environ.get('APP_SETTINGS',
                                       'config.DevelopmentConfig'))
@@ -35,30 +34,44 @@ Migrate(app, db)
 make_searchable(es, Snippet)
 
 
+# Login stuff
+login_manager = LoginManager(app)
+login_manager.login_view = "login.login"
+login_manager.login_message = "Please login"
+login_manager.login_message_category = "alert-warning"
+
+
+@login_manager.user_loader
+def load_user(userid):
+    """User loader for flask-login
+
+       :param userid: It passed in from login_manager
+
+       :returns: A User object if one exists returns None otherwise.
+    """
+    return User.query.get(userid)
+
+
 # Front end stuff
 Misaka(app, autolink=True, escape=True, fenced_code=True, no_html=True,
        no_intra_emphasis=True, strikethrough=True, superscript=True,
        safelink=True)
 
 
-#-----------------------------------------------------------------------------#
-# Hooks
-#-----------------------------------------------------------------------------#
+#-- Hooks --------------------------------------------------------------------#
 @app.before_request
 def before_request():
-    """Pre request hook"""
+    "Pre request hook"
     g.search_form = Search_Form()
 
 
-#-----------------------------------------------------------------------------#
-# Blueprints
-#-----------------------------------------------------------------------------#
+#-- Blueprints ---------------------------------------------------------------#
+app.register_blueprint(login.mod)
 app.register_blueprint(snippet.mod)
+app.register_blueprint(user.mod)
 
 
-#-----------------------------------------------------------------------------#
-# Views - Errors
-#-----------------------------------------------------------------------------#
+#-- Views - Errors -----------------------------------------------------------#
 @app.errorhandler(404)
 def page_not_found(error):
     """Generic 404 error page.
@@ -66,12 +79,21 @@ def page_not_found(error):
        :param error: An exception from the error.
        :returns: The rendered 404 error template.
     """
-    return render_template('page_not_found.html'), 404
+    return render_template('errors/page_not_found.html'), 404
 
 
-#-----------------------------------------------------------------------------#
-# Views - General Pages
-#-----------------------------------------------------------------------------#
+@app.errorhandler(500)
+def internal_error(error):
+    """Generic 500 error page.
+
+       :param error: An exception from the error.
+       :returns: The rendered 500 error page.
+    """
+    db.session.rollback()
+    return render_template('errors/internal_error.html'), 500
+
+
+#-- Views - General Pages ----------------------------------------------------#
 @app.route('/')
 def index():
     """Index page for the all users.

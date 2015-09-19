@@ -15,48 +15,43 @@ import subprocess
 import unittest
 from flask.ext.script import Manager, Server, Shell
 from flask.ext.migrate import MigrateCommand
-from app import app, db, es, Snippet
-from app.management import es_manager
+from app import app, db, es
+from app.management import es_manager, user_manager
+from app.models import Snippet, User
 
 
 manager = Manager(app)
 
 
-#-----------------------------------------------------------------------------#
-# Server
-#-----------------------------------------------------------------------------#
+#-- Server -------------------------------------------------------------------#
 server = Server(host='0.0.0.0', use_debugger=True)
 manager.add_command("runserver", server)
 
 
-#-----------------------------------------------------------------------------#
-# Database Management
-#-----------------------------------------------------------------------------#
+#-- Database Management ------------------------------------------------------#
 manager.add_command('db', MigrateCommand)
 
 
-#-----------------------------------------------------------------------------#
-# ElasticSearch Manage
-#-----------------------------------------------------------------------------#
+#-- ElasticSearch Management -------------------------------------------------#
 manager.add_command('es', es_manager)
 
 
-#-----------------------------------------------------------------------------#
-# Shell
-#-----------------------------------------------------------------------------#
+#-- User Management ----------------------------------------------------------#
+manager.add_command('user', user_manager)
+
+
+#-- Shell --------------------------------------------------------------------#
 def _make_context():
     """Function to declare all the objects to import into the shell.
 
        :returns: A dict of objects to import in the shell
     """
-    return dict(app=app, db=db, es=es, Snippet=Snippet)
+    return dict(app=app, db=db, es=es, Snippet=Snippet, User=User)
 
 manager.add_command("shell", Shell(make_context=_make_context))
 
 
-#-----------------------------------------------------------------------------#
-# Running Tests
-#-----------------------------------------------------------------------------#
+#-- Testing ------------------------------------------------------------------#
 @manager.command
 def test():
     """Runs all the tests"""
@@ -82,8 +77,6 @@ def pep8():
     sys.exit(command.returncode)
 
 
-#-----------------------------------------------------------------------------#
-# Main
-#-----------------------------------------------------------------------------#
+#-- Main ---------------------------------------------------------------------#
 if __name__ == '__main__':
     manager.run()
