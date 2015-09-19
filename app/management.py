@@ -91,3 +91,4 @@ def delete(username):
         if user:
             db.session.delete(user)
             db.session.commit()
+            print "User '{}' deleted".format(username)
