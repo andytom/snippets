@@ -1,4 +1,6 @@
 {%- extends "base.html" %}
+{%- import 'macros.html' as macros %}
+
 {%- block content %}
 {%- if results %}
   <h4>{{ results | length }} newest snippets</h4>
@@ -6,23 +8,7 @@
     <div class="row col-md-6">
       {%- for snippet in column %}
       <div class="col-md-12">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <a href='{{ url_for('snippet.get_snippet', id=snippet.id) }}'>{{ snippet.title }}</a>
-            <div class="pull-right">
-              <a href="{{ url_for('snippet.edit_snippet', id=snippet.id) }}">
-                <span class="glyphicon glyphicon-pencil"></span>
-              </a>
-              &nbsp;
-              <a href="{{ url_for('snippet.delete_snippet', id=snippet.id) }}">
-                <span class="glyphicon glyphicon-trash"></span>
-              </a>
-            </div>
-          </div>
-          <div class="panel-body">
-            {{ snippet.text | truncate(250) | markdown }}
-          </div>
-        </div>
+        {{ macros.snippet_panel(snippet, truncate=True) }}
       </div>
       {%- endfor %}
     </div>

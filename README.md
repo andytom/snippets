@@ -95,8 +95,8 @@ TODO
  - [x] Snippet.es_search
  - [ ] Moching out for testing
  - [x] Return list of Snippets
-- [ ] Look at duplication in templates
- - [ ] Rendering snippets
+- [x] Look at duplication in templates
+ - [x] Rendering snippets
  - [x] Rendering forms
 - [ ] Tests for make_searchable
 - [ ] Logging
