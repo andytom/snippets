@@ -78,9 +78,6 @@ TODO
 - [x] Manage commands for the database
 - [x] Manage commands for the index
 - [x] Add users
- - [x] Add user login, log out
- - [x] Add user registration and account page
- - [x] Manage commands for Users
 - [ ] Add permissions
  - [ ] Must be logged in to create
  - [ ] Only user or admin can delete or edit
@@ -100,7 +97,7 @@ TODO
  - [x] Return list of Snippets
 - [ ] Look at duplication in templates
  - [ ] Rendering snippets
- - [ ] Rendering forms
+ - [x] Rendering forms
 - [ ] Tests for make_searchable
 - [ ] Logging
 - [ ] Admin Page for Users

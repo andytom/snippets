@@ -1,0 +1,12 @@
+{% macro input(field) %}
+  <div class="form-group has-feedback{%- if field.errors %} has-error{% endif %}">
+    {{ field.label(class="control-label") }}
+    {{ field(class="form-control", **kwargs)}}
+    {%- if field.errors %}
+    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+    {%- for error in field.errors %}
+    <span class="help-block">{{ error }}</span>
+    {%- endfor %}
+    {%- endif %}
+  </div>
+{%- endmacro %}

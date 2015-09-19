@@ -25,7 +25,7 @@ def new_user():
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('.get_user', user_id=user.id))
-    return render_template('add_user.html', form=form)
+    return render_template('users/add_user.html', form=form)
 
 
 @mod.route('/<int:user_id>')
@@ -37,4 +37,4 @@ def get_user(user_id):
        :returns: If the ID is for a valid user returns the page for the user.
        """
     user = User.query.get_or_404(user_id)
-    return render_template('user.html', user=user)
+    return render_template('users/user.html', user=user)
