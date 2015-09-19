@@ -12,13 +12,13 @@ import unittest
 from base import BaseTestCase
 
 
-class ValidationTestCase(BaseTestCase):
-    """Test Case for checking that Form Validation Works."""
+class SnippetValidationTestCase(BaseTestCase):
+    """Test Case for checking that Snippet Form Validation Works."""
 
     def _get_snippet_dict(self):
-        """Returns a dict containing all the kwargs to build a valid snippet
+        """Returns a dict containing all the data to build a valid snippet
 
-           :returns: A dict containing all the kwargs to build a Snippet
+           :returns: A dict containing all the data to build a Snippet
         """
         snippet = {
             'text': 'Test Text',
@@ -31,7 +31,7 @@ class ValidationTestCase(BaseTestCase):
         data = self._get_snippet_dict()
         data.pop('title')
 
-        rv = self.app.post('/new', data=data)
+        rv = self.app.post('/snippet/new', data=data)
         self.assertIn('This field is required.', rv.data)
 
     def test_create_snippet_no_text(self):
@@ -39,12 +39,5 @@ class ValidationTestCase(BaseTestCase):
         data = self._get_snippet_dict()
         data.pop('text')
 
-        rv = self.app.post('/new', data=data)
+        rv = self.app.post('/snippet/new', data=data)
         self.assertIn('This field is required.', rv.data)
-
-    def test_create_snippet_blank(self):
-        """Test for submission of empty form."""
-        rv = self.app.post('/new', data={})
-
-        count = rv.data.count('This field is required.')
-        self.assertEqual(count, 2)
