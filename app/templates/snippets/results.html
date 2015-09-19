@@ -1,27 +1,12 @@
 {%- set title = query %}
 {%- extends "base.html" %}
+{%- import 'macros.html' as macros %}
 
 {%- block content %}
 {%- if results %}
   <h4>Results for query <strong>{{ query }}</strong></h4>
   {%- for result in results %}
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <a href='{{ url_for('snippet.get_snippet', id=result.id) }}'>{{ result.title }}</a>
-      <div class="pull-right">
-        <a href="{{ url_for('snippet.edit_snippet', id=result.id) }}">
-          <span class="glyphicon glyphicon-pencil"></span>
-        </a>
-        &nbsp;
-        <a href="{{ url_for('snippet.delete_snippet', id=result.id) }}">
-          <span class="glyphicon glyphicon-trash"></span>
-        </a>
-      </div>
-    </div>
-    <div class="panel-body">
-      {{ result.text | truncate(250) | markdown }}
-    </div>
-  </div>
+      {{ macros.snippet_panel(result, truncate=True) }}
   {%- endfor %}
 {%- else %}
   <h4>No results for query <strong>{{ query }}</strong></h4>
