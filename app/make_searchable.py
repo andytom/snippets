@@ -13,9 +13,7 @@ import elasticsearch
 from sqlalchemy import event
 
 
-#-----------------------------------------------------------------------------#
-# Helpers
-#-----------------------------------------------------------------------------#
+#-- Helpers ------------------------------------------------------------------#
 def do_index_item(es_client, item):
     """Take the passed item and add it to the index using the passed
        ElasticSearch client.
@@ -92,9 +90,7 @@ def es_search(cls, es_client, **search_kwargs):
     return results
 
 
-#-----------------------------------------------------------------------------#
-# Main
-#-----------------------------------------------------------------------------#
+#-- Main ---------------------------------------------------------------------#
 def make_searchable(es_client, model):
     """Take a SQLAlchemy database model and add hook to make sure it is
        added, updated and remove for the Elastic Search Models. Also adds the
