@@ -77,17 +77,21 @@ TODO
 - [x] Syntax highlighing
 - [x] Manage commands for the database
 - [x] Manage commands for the index
-- [ ] Add users and permissions
- - [ ] Add user registration, login, log out
+- [x] Add users
+ - [x] Add user login, log out
+ - [x] Add user registration and account page
+ - [x] Manage commands for Users
+- [ ] Add permissions
  - [ ] Must be logged in to create
  - [ ] Only user or admin can delete or edit
  - [ ] Shared/not shared snippets?
- - [ ] Manage commands/Admin Page for Users
 - [ ] Replce index with a landing page
 - [ ] Add help pages
  - [ ] What Markdown is supported
  - [ ] What queries are supported
-- [ ] Custom Validator for search query
+- [ ] Custom Validators
+ - [ ] Search query
+ - [ ] Add user (unique username)
 - [ ] Groups of snippets
 - [ ] Production Deployment instructions
 - [ ] Work out a better way to do searching
@@ -96,8 +100,10 @@ TODO
  - [x] Return list of Snippets
 - [ ] Look at duplication in templates
  - [ ] Rendering snippets
+ - [ ] Rendering forms
 - [ ] Tests for make_searchable
 - [ ] Logging
+- [ ] Admin Page for Users
 
 License
 -------
