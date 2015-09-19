@@ -18,9 +18,7 @@ from app.forms import Confirm_Form, Snippit_Form
 mod = Blueprint('snippet', __name__, url_prefix='/snippet')
 
 
-#-----------------------------------------------------------------------------#
-# Views - General Pages
-#-----------------------------------------------------------------------------#
+#-- Views - General Pages ----------------------------------------------------#
 @mod.route('/')
 def results():
     """Results page for searches.
@@ -74,9 +72,7 @@ def new_snippet():
     return render_template('edit_snippet.html', form=form)
 
 
-#-----------------------------------------------------------------------------#
-# Individual Snippets
-#-----------------------------------------------------------------------------#
+#-- Individual Snippet -------------------------------------------------------#
 @mod.route('/<int:id>')
 def get_snippet(id):
     """Returns the page for an individual Snippet.

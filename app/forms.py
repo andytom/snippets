@@ -15,10 +15,8 @@ from wtforms import StringField, TextAreaField, HiddenField, PasswordField
 from wtforms.validators import DataRequired, EqualTo
 
 
-#-----------------------------------------------------------------------------#
-# Redirect form
-# http://flask.pocoo.org/snippets/63/
-#-----------------------------------------------------------------------------#
+#-- Redirect form ------------------------------------------------------------#
+# Taken from  http://flask.pocoo.org/snippets/63/
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
@@ -49,9 +47,7 @@ class Redirect_Form(Form):
         return redirect(target or url_for(endpoint, **values))
 
 
-#-----------------------------------------------------------------------------#
-# Forms
-#-----------------------------------------------------------------------------#
+#-- Forms --------------------------------------------------------------------#
 class Snippit_Form(Form):
     """A Form for creating or editing Snippets"""
     title = StringField('Title', validators=[DataRequired()])

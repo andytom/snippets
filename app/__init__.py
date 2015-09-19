@@ -21,9 +21,7 @@ from models import db, Snippet, User
 from views import snippet, login, user
 
 
-#-----------------------------------------------------------------------------#
-# Config
-#-----------------------------------------------------------------------------#
+#-- Config -------------------------------------------------------------------#
 app = Flask(__name__)
 app.config.from_object(os.environ.get('APP_SETTINGS',
                                       'config.DevelopmentConfig'))
@@ -60,26 +58,20 @@ Misaka(app, autolink=True, escape=True, fenced_code=True, no_html=True,
        safelink=True)
 
 
-#-----------------------------------------------------------------------------#
-# Hooks
-#-----------------------------------------------------------------------------#
+#-- Hooks --------------------------------------------------------------------#
 @app.before_request
 def before_request():
     """Pre request hook"""
     g.search_form = Search_Form()
 
 
-#-----------------------------------------------------------------------------#
-# Blueprints
-#-----------------------------------------------------------------------------#
+#-- Blueprints ---------------------------------------------------------------#
 app.register_blueprint(login.mod)
 app.register_blueprint(snippet.mod)
 app.register_blueprint(user.mod)
 
 
-#-----------------------------------------------------------------------------#
-# Views - Errors
-#-----------------------------------------------------------------------------#
+#-- Views - Errors -----------------------------------------------------------#
 @app.errorhandler(404)
 def page_not_found(error):
     """Generic 404 error page.
@@ -101,9 +93,7 @@ def internal_error(error):
     return render_template('internal_error.html'), 500
 
 
-#-----------------------------------------------------------------------------#
-# Views - General Pages
-#-----------------------------------------------------------------------------#
+#-- Views - General Pages ----------------------------------------------------#
 @app.route('/')
 def index():
     """Index page for the all users.

@@ -13,9 +13,7 @@ from app import es, Snippet, User, db
 from make_searchable import do_index_item, do_delete_item
 
 
-#-----------------------------------------------------------------------------#
-# ES Management commands
-#-----------------------------------------------------------------------------#
+#-- ES Management commands ---------------------------------------------------#
 es_manager = Manager(usage="Perform ElasticSearch Operations")
 
 
@@ -64,9 +62,7 @@ def rebuild():
                                                                 snippet.title)
 
 
-#-----------------------------------------------------------------------------#
-# User Manager setup
-#-----------------------------------------------------------------------------#
+#-- User Management commands -------------------------------------------------#
 user_manager = Manager(usage="Manage Users")
 
 
