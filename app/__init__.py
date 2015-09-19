@@ -61,7 +61,7 @@ Misaka(app, autolink=True, escape=True, fenced_code=True, no_html=True,
 #-- Hooks --------------------------------------------------------------------#
 @app.before_request
 def before_request():
-    """Pre request hook"""
+    "Pre request hook"
     g.search_form = Search_Form()
 
 

@@ -19,7 +19,7 @@ db = SQLAlchemy()
 
 #-- Models -------------------------------------------------------------------#
 class Snippet(db.Model):
-    """Class for our snippets that want to store and search over."""
+    "Class for our snippets that want to store and search over."
     __tablename__ = 'snippet'
     __es_index__ = 'snippets'
     __es_doc_type__ = 'snippet'
@@ -47,7 +47,7 @@ class Snippet(db.Model):
 
 
 class User(db.Model, UserMixin):
-    """Class to represent Users"""
+    "Class to represent Users"
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
