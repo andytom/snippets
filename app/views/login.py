@@ -30,7 +30,7 @@ def login():
             return form.redirect('index')
         else:
             flash('Invalid Username or Password', 'alert-danger')
-    return render_template('login.html', form=form)
+    return render_template('login/login.html', form=form)
 
 
 @mod.route('/logout')
