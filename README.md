@@ -49,9 +49,10 @@ As well as test for pep8.
 $ ./manage.py pep8
 ~~~
 
-
-Database Management
+Management Commands
 -------------------
+
+### Database Management
 Changes to the Database schema are managed using [Flask-Migrate](https://flask-migrate.readthedocs.org/en/latest/).
 You can read the full help via:
 
@@ -59,13 +60,20 @@ You can read the full help via:
 $ ./manage.py db --help
 ~~~
 
-ElasticSearch Index Management
-------------------------------
+### ElasticSearch Index Management
 The connection to ElasticSearch and the ElasticSearch Indexes can be managed using manage.py.
 You can read the full help via:
 
 ~~~
 $ ./manage.py es --help
+~~~
+
+### User Management
+You can add or delete users using the manage.py script.
+You can read the full help via:
+
+~~~
+$ ./manage.py user --help
 ~~~
 
 TODO

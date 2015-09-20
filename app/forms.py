@@ -52,6 +52,13 @@ class Redirect_Form(Form):
 class Unique(object):
     "A Vaidator for Unique fields"
     def __init__(self, model, column, message=None):
+        """Test is a there is already a record in the database that matches
+           the field.
+
+           :param model: The SQLAlchemy database model for the record
+           :param column: The SQLAlchemy column to search for a match
+           :param message: Message to raise if the field fails validation
+        """
         self.model = model
         self.column = column
         if not message:
