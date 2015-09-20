@@ -12,7 +12,8 @@ from urlparse import urlparse, urljoin
 from flask import request, url_for, redirect
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField, HiddenField, PasswordField
-from wtforms.validators import DataRequired, EqualTo
+from wtforms.validators import DataRequired, EqualTo, ValidationError
+from models import User
 
 
 #-- Redirect form ------------------------------------------------------------#
@@ -47,6 +48,21 @@ class Redirect_Form(Form):
         return redirect(target or url_for(endpoint, **values))
 
 
+#-- Validators ---------------------------------------------------------------#
+class Unique(object):
+    "A Vaidator for Unique fields"
+    def __init__(self, model, column, message=None):
+        self.model = model
+        self.column = column
+        if not message:
+            message = 'Field must be unique'
+        self.message = message
+
+    def __call__(self, form, field):
+        if self.model.query.filter(self.column == field.data).first():
+            raise ValidationError(self.message)
+
+
 #-- Forms --------------------------------------------------------------------#
 class Snippit_Form(Form):
     "A Form for creating or editing Snippets"
@@ -66,7 +82,10 @@ class Confirm_Form(Form):
 
 class User_Form(Form):
     "A Form for creating User"
-    username = StringField('Username', validators=[DataRequired()])
+    username = StringField('Username',
+                           validators=[DataRequired(),
+                                       Unique(User, User.username,
+                                       message='That username is taken.')])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm = PasswordField('Confirm Password',
                             validators=[DataRequired(),
