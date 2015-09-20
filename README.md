@@ -78,6 +78,7 @@ TODO
 - [x] Manage commands for the database
 - [x] Manage commands for the index
 - [x] Add users
+- [x] Look at duplication in templates
 - [ ] Add permissions
  - [ ] Must be logged in to create
  - [ ] Only user or admin can delete or edit
@@ -88,16 +89,13 @@ TODO
  - [ ] What queries are supported
 - [ ] Custom Validators
  - [ ] Search query
- - [ ] Add user (unique username)
+ - [x] Add user (unique username)
 - [ ] Groups of snippets
 - [ ] Production Deployment instructions
 - [ ] Work out a better way to do searching
  - [x] Snippet.es_search
  - [ ] Moching out for testing
  - [x] Return list of Snippets
-- [x] Look at duplication in templates
- - [x] Rendering snippets
- - [x] Rendering forms
 - [ ] Tests for make_searchable
 - [ ] Logging
 - [ ] Admin Page for Users

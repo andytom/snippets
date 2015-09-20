@@ -112,7 +112,6 @@ class UserValidateTestCase(BaseTestCase):
         self.assertIn('This field is required.', rv.data)
         self.assertNotIn(data['password'], rv.data)
 
-    @unittest.skip("Need to write custom validator")
     def test_duplicate_username(self):
         "Test that username is unique"
         data = self._get_user_dict()
@@ -120,7 +119,18 @@ class UserValidateTestCase(BaseTestCase):
                                password=data['password'])
 
         rv = self.app.post('/user/new', data=data)
-        self.assertIn('That username is already taken.', rv.data)
+        self.assertIn('That username is taken.', rv.data)
+        self.assertNotIn(data['password'], rv.data)
+
+    def test_duplicate_username_case_insensetive(self):
+        "Test that username is unique (case insensitive)"
+        data = self._get_user_dict()
+        user = self._make_item(User, username=data['username'].lower(),
+                               password=data['password'])
+
+        data['username'] = data['username'].upper()
+        rv = self.app.post('/user/new', data=data)
+        self.assertIn('That username is taken.', rv.data)
         self.assertNotIn(data['password'], rv.data)
 
     def test_no_confirm(self):
