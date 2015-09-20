@@ -98,7 +98,7 @@ class SnippetTestCase(BaseTestCase):
         rv = self.app.post('/snippet/new', data=data)
 
         # There will only be one snippet.
-        snippet = Snippet.query.all()[0]
+        snippet = Snippet.query.first()
         self.assertEqual(snippet.title, data['title'])
         self.assertEqual(snippet.text, data['text'])
 
