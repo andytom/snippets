@@ -32,18 +32,18 @@ def do_index_item(es_client, item):
                     id=item.id)
 
 
-def do_delete_item(es_client, model, item_id):
+def do_delete_item(es_client, model, item):
     """Remove a document from the ElasticSearch index.
 
        :param es_client: A elasicsearch-py Elasticsearch object to use for the
                          interactions with ElasticSearch.
-       :param item_id: The ID to be removed from the index.
+       :param item: The item to be removed from the index.
        :param model: The SQLAlchemy database model of the item.
     """
     try:
         es_client.delete(index=model.__es_index__,
                          doc_type=model.__es_doc_type__,
-                         id=item_id)
+                         id=item.id)
     except elasticsearch.exceptions.NotFoundError:
         # If it can't be found assume it has already been deleted
         pass
