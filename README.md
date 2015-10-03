@@ -49,9 +49,10 @@ As well as test for pep8.
 $ ./manage.py pep8
 ~~~
 
-
-Database Management
+Management Commands
 -------------------
+
+### Database Management
 Changes to the Database schema are managed using [Flask-Migrate](https://flask-migrate.readthedocs.org/en/latest/).
 You can read the full help via:
 
@@ -59,13 +60,20 @@ You can read the full help via:
 $ ./manage.py db --help
 ~~~
 
-ElasticSearch Index Management
-------------------------------
+### ElasticSearch Index Management
 The connection to ElasticSearch and the ElasticSearch Indexes can be managed using manage.py.
 You can read the full help via:
 
 ~~~
 $ ./manage.py es --help
+~~~
+
+### User Management
+You can add or delete users using the manage.py script.
+You can read the full help via:
+
+~~~
+$ ./manage.py user --help
 ~~~
 
 TODO
@@ -78,9 +86,13 @@ TODO
 - [x] Manage commands for the database
 - [x] Manage commands for the index
 - [x] Add users
+- [x] Look at duplication in templates
+- [ ] Intergrate Users
+ - [ ] Add link to login/register
+ - [ ] Connect users and snippets
 - [ ] Add permissions
  - [ ] Must be logged in to create
- - [ ] Only user or admin can delete or edit
+ - [ ] Only owning user or admin can delete or edit
  - [ ] Shared/not shared snippets?
 - [ ] Replce index with a landing page
 - [ ] Add help pages
@@ -88,19 +100,18 @@ TODO
  - [ ] What queries are supported
 - [ ] Custom Validators
  - [ ] Search query
- - [ ] Add user (unique username)
+ - [x] Add user (unique username)
 - [ ] Groups of snippets
 - [ ] Production Deployment instructions
 - [ ] Work out a better way to do searching
  - [x] Snippet.es_search
- - [ ] Moching out for testing
+ - [ ] Moching out for testing (vcrpy?)
  - [x] Return list of Snippets
-- [x] Look at duplication in templates
- - [x] Rendering snippets
- - [x] Rendering forms
 - [ ] Tests for make_searchable
 - [ ] Logging
 - [ ] Admin Page for Users
+- [ ] Preview for Markdown on Create/Edit Snippts
+- [ ] Add created and updated dates to Snippets
 
 License
 -------

@@ -78,7 +78,7 @@ class UserTestCase(BaseTestCase):
         rv = self.app.post('/user/new', data=data, follow_redirects=True)
         self.assertIn(data['username'], rv.data)
 
-        user = User.query.all()[0]
+        user = User.query.first()
         self.assertEqual(user.username, data['username'])
         self.assertTrue(user.check_password(data['password']))
 

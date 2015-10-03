@@ -69,7 +69,7 @@ user_manager = Manager(usage="Manage Users")
 @user_manager.command
 def add(username):
     "Add a new user"
-    if User.query.filter_by(username=username).first():
+    if User.query.filter_by(username=username).count():
         print "There is already a user with the username {}".format(username)
     else:
         password = prompt_pass('Password')
