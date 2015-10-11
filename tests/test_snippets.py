@@ -9,35 +9,19 @@
 """
 from __future__ import unicode_literals
 import json
+import os
 import unittest
-from app import Snippet, es
+import vcr
+from app import Snippet
 from base import BaseTestCase
 
 
-def fake_index(*args, **kwargs):
-    """NOOP index for testing"""
-    pass
+PARENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-
-def fake_delete(*args, **kwargs):
-    """NOOP delete for testing"""
-    pass
-
-
-def make_fake_search(results):
-    """Makes a dummy ElasticSearch search function that returns the passed
-       resutls
-
-       :param resutls: A dict of resutls to be returned by the fake search
-                       function.
-    """
-    def fake_search(*args, **kwargs):
-        return results
-    es.search = fake_search
-
-
-es.index = fake_index
-es.delete = fake_delete
+my_vcr = vcr.VCR(
+    cassette_library_dir=os.path.join(PARENT_DIR, 'fixtures'),
+    path_transformer=vcr.VCR.ensure_suffix('.yaml')
+)
 
 
 class NoSnippetsTestCase(BaseTestCase):
@@ -50,6 +34,7 @@ class NoSnippetsTestCase(BaseTestCase):
         rv = self.app.get('/search')
         self.assertEqual(rv.status_code, 405)
 
+    @my_vcr.use_cassette()
     def test_search_redirect(self):
         """Test that we get redirected correctly when posting to search"""
         data = {'query': 'test'}
@@ -72,12 +57,11 @@ class NoSnippetsTestCase(BaseTestCase):
         rv = self.app.get('/snippet/1')
         self.assertEqual(rv.status_code, 404)
 
+    @my_vcr.use_cassette()
     def test_search(self):
         """Test that we don't get an search results when the Database is
            empty.
         """
-        make_fake_search({})
-
         rv = self.app.get('/snippet/?q=test')
         self.assertEqual(rv.status_code, 200)
         self.assertIn('No results for query', rv.data)
@@ -117,6 +101,7 @@ class NoSnippetsTestCase(BaseTestCase):
 class SnippetTestCase(BaseTestCase):
     """Test Case for all tests when Snippets have been added"""
 
+    @my_vcr.use_cassette()
     def test_create_snippet(self):
         """Test the creation of a snippet"""
         data = {'title': 'Test Title',
@@ -128,6 +113,7 @@ class SnippetTestCase(BaseTestCase):
         self.assertEqual(snippet.title, data['title'])
         self.assertEqual(snippet.text, data['text'])
 
+    @my_vcr.use_cassette()
     def test_snippet_update(self):
         """Test updating a snippet."""
         snippet = self._make_item(Snippet, title='Title', text='Text')
@@ -140,6 +126,7 @@ class SnippetTestCase(BaseTestCase):
         self.assertEqual(snippet.title, data['title'])
         self.assertEqual(snippet.text, data['text'])
 
+    @my_vcr.use_cassette()
     def test_snippet_delete(self):
         """Test deleting a snippet"""
         snippet = self._make_item(Snippet, title='Title', text='Text')
@@ -148,21 +135,12 @@ class SnippetTestCase(BaseTestCase):
 
         self.assertEqual(None, Snippet.query.get(snippet.id))
 
+    @my_vcr.use_cassette()
     def test_search_with_results(self):
         """Test that a valid search returns a result and the returned result is
            processed correctly
         """
         snippet = self._make_item(Snippet, title='Title', text='Text')
-
-        make_fake_search({'hits': {'hits': [{
-                                            '_id': unicode(snippet.id),
-                                            '_source': {
-                                                'title': snippet.title,
-                                                'text': snippet.text,
-                                            }
-                                            }]
-                                   }
-                          })
 
         rv = self.app.get('/snippet/?q=Test')
 
@@ -171,11 +149,10 @@ class SnippetTestCase(BaseTestCase):
         self.assertIn(snippet.text, rv.data)
         self.assertFalse('No results for query' in rv.data)
 
+    @my_vcr.use_cassette()
     def test_search_without_results(self):
         """Test that an invalid search doesn't return resutls."""
         snippet = self._make_item(Snippet, title='Title', text='Text')
-
-        make_fake_search({})
 
         rv = self.app.get('/snippet/?q=aaaaaaaaa')
 
