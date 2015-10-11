@@ -8,6 +8,7 @@
     :license: MIT, see LICENSE for more details.
 """
 from __future__ import unicode_literals
+import json
 import unittest
 from app import Snippet, es
 from base import BaseTestCase
@@ -86,6 +87,31 @@ class NoSnippetsTestCase(BaseTestCase):
         rv = self.app.get('/snippet/')
         self.assertEqual(rv.status_code, 200)
         self.assertIn("There are no snippets.", rv.data)
+
+    def test_preview_render(self):
+        """Test that we can preview"""
+        data = {'title': 'Test Title',
+                'text': 'Test Text'}
+
+        rv = self.app.post('/snippet/render', data=json.dumps(data),
+                           headers=[('Content-Type', 'application/json')])
+        rv_json = json.loads(rv.data)
+
+        self.assertIn(data['title'], rv_json['html'])
+        self.assertIn(data['text'], rv_json['html'])
+
+    def test_preview_render_not_valid(self):
+        """Test that we get 400s on when not JSON"""
+        data = {'title': 'Test Title',
+                'text': 'Test Text'}
+
+        rv = self.app.post('/snippet/render', data=data)
+        self.assertEqual(rv.status_code, 400)
+
+    def test_preview_render_not_a_post(self):
+        """Test that can't do a GET"""
+        rv = self.app.get('/snippet/render')
+        self.assertEqual(rv.status_code, 405)
 
 
 class SnippetTestCase(BaseTestCase):
