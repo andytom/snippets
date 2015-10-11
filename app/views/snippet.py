@@ -9,7 +9,7 @@
 """
 from __future__ import unicode_literals
 from flask import Blueprint, request, render_template, redirect, url_for,\
-    flash, g
+    flash, g, jsonify, abort
 
 from app.models import db, Snippet
 from app.forms import Confirm_Form, Snippit_Form
@@ -72,6 +72,26 @@ def new_snippet():
         return redirect(url_for('.get_snippet', id=new_snippet.id))
 
     return render_template('snippets/edit_snippet.html', form=form)
+
+
+#-- Ajax Endpoints -----------------------------------------------------------#
+@mod.route('/render', methods=['POST'])
+def render():
+    """Endpoint for Ajax requests to render markdown for a preview
+
+       :returns: JSON containing a the rendered snippet data as a html
+                 fragment.
+    """
+    if not request.json:
+        abort(400)
+
+    data = {
+        'text': request.json.get('text', ''),
+        'title': request.json.get('title', '')
+    }
+
+    html = render_template('snippets/render.html', snippet=data)
+    return jsonify({'html': html})
 
 
 #-- Individual Snippet -------------------------------------------------------#

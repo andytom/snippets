@@ -87,6 +87,7 @@ TODO
 - [x] Manage commands for the index
 - [x] Add users
 - [x] Look at duplication in templates
+- [x] Preview for Markdown on Create/Edit Snippts
 - [ ] Intergrate Users
  - [ ] Add link to login/register
  - [ ] Connect users and snippets
@@ -110,7 +111,6 @@ TODO
 - [ ] Tests for make_searchable
 - [ ] Logging
 - [ ] Admin Page for Users
-- [ ] Preview for Markdown on Create/Edit Snippts
 - [ ] Add created and updated dates to Snippets
 
 License
