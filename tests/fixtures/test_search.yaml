@@ -1,0 +1,18 @@
+interactions:
+- request:
+    body: '{"query": {"query_string": {"query": "test"}}}'
+    headers: {}
+    method: GET
+    uri: http://localhost:9200/snippets/snippet/_search
+  response:
+    body: {string: !!python/unicode '{"took":70,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":4,"max_score":0.2169777,"hits":[{"_index":"snippets","_type":"snippet","_id":"1","_score":0.2169777,"_source":{"text":
+        "Test 1", "title": "Test 1"}},{"_index":"snippets","_type":"snippet","_id":"2","_score":0.2169777,"_source":{"text":
+        "Test 2", "title": "Test 2"}},{"_index":"snippets","_type":"snippet","_id":"3","_score":0.2169777,"_source":{"text":
+        "Test 3", "title": "Test 3"}},{"_index":"snippets","_type":"snippet","_id":"5","_score":0.076713204,"_source":{"text":
+        "~~~sql\r\nSELECT count(*) FROM table\r\nWHERE column > 5\r\nAND other_column
+        like ''%example%'';\r\n~~~", "title": "test"}}]}}'}
+    headers:
+      content-length: ['690']
+      content-type: [application/json; charset=UTF-8]
+    status: {code: 200, message: OK}
+version: 1

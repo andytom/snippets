@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename="3rd_party/css/bootstrap.min.css") }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename="3rd_party/css/bootstrap-theme.min.css") }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename="3rd_party/css/highlight-default.min.css") }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/fixups.css") }}" type="text/css" />
   </head>
   <body>
   <!-- Navbar -->
@@ -60,7 +61,9 @@
   <script src="{{ url_for('static', filename="3rd_party/js/jquery.min.js") }}"></script>
   <script src="{{ url_for('static', filename="3rd_party/js/bootstrap.min.js") }}"></script>
   <script src="{{ url_for('static', filename="3rd_party/js/highlight.min.js") }}"></script>
+
   <script>hljs.initHighlightingOnLoad();</script>
 
+  {%- block scripts %}{%- endblock %}
   </body>
 </html>

@@ -87,6 +87,8 @@ TODO
 - [x] Manage commands for the index
 - [x] Add users
 - [x] Look at duplication in templates
+- [x] Preview for Markdown on Create/Edit Snippts
+- [x] Work out a better way to do searching
 - [ ] Intergrate Users
  - [ ] Add link to login/register
  - [ ] Connect users and snippets
@@ -103,14 +105,9 @@ TODO
  - [x] Add user (unique username)
 - [ ] Groups of snippets
 - [ ] Production Deployment instructions
-- [ ] Work out a better way to do searching
- - [x] Snippet.es_search
- - [ ] Moching out for testing (vcrpy?)
- - [x] Return list of Snippets
 - [ ] Tests for make_searchable
 - [ ] Logging
 - [ ] Admin Page for Users
-- [ ] Preview for Markdown on Create/Edit Snippts
 - [ ] Add created and updated dates to Snippets
 
 License

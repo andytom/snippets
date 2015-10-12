@@ -8,11 +8,58 @@
 {%- endif %}
 
 {%- block content %}
-<form role="form" method="post">
-  {{ form.hidden_tag() }}
-  {{ macros.input(form.title) }}
-  {{ macros.input(form.text, rows=20) }}
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <a href="{{ cancel_url }}"><button type="button" class="btn btn-default">Cancel</button></a>
-</form>
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#edit" aria-controls="edit" role="tab" data-toggle="tab">Edit</a></li>
+    <li role="presentation"><a id='previewTab' href="#preview" aria-controls="preview" role="tab" data-toggle="tab">Preview</a></li>
+  </ul>
+
+  <!-- Nav bodies -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="edit">
+      <form role="form" method="post">
+        {{ form.hidden_tag() }}
+        {{ macros.input(form.title) }}
+        {{ macros.input(form.text, rows=20) }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="{{ cancel_url }}"><button type="button" class="btn btn-default">Cancel</button></a>
+      </form>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="preview">
+      <span id="snippet-preview"></span>
+    </div>
+
+  </div>
+</div>
+{%- endblock %}
+
+{%- block scripts %}
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+  function renderPreview() {
+    $.ajax({
+      type: "POST",
+      contentType: "application/json;",
+      url: $SCRIPT_ROOT + '{{ url_for('snippet.render') }}',
+      data: JSON.stringify({
+        text: $('#text').val(),
+        title: $('#title').val()
+      }),
+      success: function(data) {
+        $("#snippet-preview").html(data.html);
+        // Make sure that we highlight all the code blocks
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      },
+     dataType: "json"
+    });
+  };
+
+  $('a#previewTab').on('click', function(e) {renderPreview()});
+</script>
 {%- endblock %}
