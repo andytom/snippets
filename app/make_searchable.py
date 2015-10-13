@@ -32,18 +32,18 @@ def do_index_item(es_client, item):
                     id=item.id)
 
 
-def do_delete_item(es_client, model, item):
+def do_delete_item(es_client, model, item_id):
     """Remove a document from the ElasticSearch index.
 
        :param es_client: A elasicsearch-py Elasticsearch object to use for the
                          interactions with ElasticSearch.
-       :param item: The item to be removed from the index.
+       :param item_id: The id of the item to be removed from the index.
        :param model: The SQLAlchemy database model of the item.
     """
     try:
         es_client.delete(index=model.__es_index__,
                          doc_type=model.__es_doc_type__,
-                         id=item.id)
+                         id=item_id)
     except elasticsearch.exceptions.NotFoundError:
         # If it can't be found assume it has already been deleted
         pass
@@ -96,8 +96,9 @@ def make_searchable(es_client, model):
        added, updated and remove for the Elastic Search Models. Also adds the
        classmehod 'es_search' for simple searching.
 
-       Requires that the model has '__es_index__', '__es_doc_type__' and
+       Requires that the model has 'id', '__es_index__', '__es_doc_type__' and
        '__es_fields__' atributes. Where:
+       * 'id' is a unique id (Database Primary Key)
        * '__es_index__' is the ElasticSearch index this model should be added
          to.
        * '__es_doc_type__' is the Docuemnt type for this model.
@@ -111,7 +112,7 @@ def make_searchable(es_client, model):
         do_index_item(es_client, target)
 
     def delete_item(mapper, connection, target):
-        do_delete_item(es_client, model, target)
+        do_delete_item(es_client, model, target.id)
 
     event.listen(model, 'after_insert', index_item)
     event.listen(model, 'after_update', index_item)
