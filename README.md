@@ -15,25 +15,28 @@ and a database of your choice for storage.
 Running Snippets
 ----------------
 You can get Snippets up and running on [localhost:5000](http://localhost:5000/)
-using the following instructions. The following assumes you have [git](https://git-scm.com/),
+using the following instructions. This setup will use sqlite as it's database.
+The following assumes you have [git](https://git-scm.com/),
 [python](https://www.python.org/), [pip](https://docs.python.org/2.7/installing/),
-[virtualenv](https://virtualenv.pypa.io/en/latest/),
+[virtualenv](https://virtualenv.pypa.io/en/latest/), [sqlite](https://www.sqlite.org/),
 and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/) installed.
 
 It also assumes that you have ElasticSearch installed and listening
-on ```localhost:9200```. For more information about setting up ElasticSearch
-see the
-[ElasticSearch Docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+on ```localhost:9200```.
+For more information about setting up ElasticSearch see the
+[ElasticSearch Docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html).
 
 ~~~ bash
-$ git clone https://github.com/andytom/snippets.git
-$ mkvirtualenv snippets
-$ cd snippets
-$ pip install -r requirements.txt
-$ ./manage.py db upgrade
-$ ./manage.py runserver
+git clone https://github.com/andytom/snippets.git snippets
+cd snippets
+mkvirtualenv snippets
+pip install -r requirements.txt
+./manage.py db upgrade
+./manage.py runserver
 ~~~
 
+You can then navigate to [localhost:5000](http://localhost:5000/) to test out
+Snippets.
 
 Testing
 -------
@@ -43,7 +46,7 @@ You can run all the test locally using manage.py.
 $ ./manage.py test
 ~~~
 
-As well as test for pep8.
+As well as test for pep8 compliance.
 
 ~~~
 $ ./manage.py pep8
@@ -96,6 +99,10 @@ TODO
  - [ ] Must be logged in to create
  - [ ] Only owning user or admin can delete or edit
  - [ ] Shared/not shared snippets?
+- [ ] Admin User
+ - [ ] Admin Page for User management
+ - [ ] Admin Page for Snippet management
+ - [ ] Admin Page for Index management?
 - [ ] Replce index with a landing page
 - [ ] Add help pages
  - [ ] What Markdown is supported
@@ -105,10 +112,13 @@ TODO
  - [x] Add user (unique username)
 - [ ] Groups of snippets
 - [ ] Production Deployment instructions
-- [ ] Tests for make_searchable
 - [ ] Logging
-- [ ] Admin Page for Users
 - [ ] Add created and updated dates to Snippets
+- [ ] Look at testing
+ - [ ] Tests for make_searchable
+ - [ ] Use fixtures in tests?
+ - [ ] Coverage?
+ - [ ] Tests for management commands?
 
 License
 -------
