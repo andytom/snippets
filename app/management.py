@@ -8,7 +8,7 @@
     :license: MIT, see LICENSE for more details.
 """
 from __future__ import unicode_literals
-from flask.ext.script import Manager, prompt_bool, prompt_pass
+from flask.ext.script import Manager, prompt_bool, prompt_pass, prompt
 from app import es, Snippet, User, db
 from make_searchable import do_index_item, do_delete_item
 
@@ -67,8 +67,11 @@ user_manager = Manager(usage="Manage Users")
 
 
 @user_manager.command
-def add(username):
+def add(username=None):
     "Add a new user"
+    if username is None:
+        username = prompt("Username")
+
     if User.query.filter_by(username=username).count():
         print "There is already a user with the username {}".format(username)
     else:
@@ -85,10 +88,13 @@ def add(username):
 
 @user_manager.command
 def delete(username):
-    "Delete a user"
-    if prompt_bool("Are you sure you want to delete {}".format(username)):
-        user = User.query.filter_by(username=username).first()
-        if user:
+    "Delete a user by username"
+    user = User.query.filter_by(username=username).first()
+    if user:
+        if prompt_bool("Are you sure you want to delete {}".format(username)):
             db.session.delete(user)
             db.session.commit()
             print "User '{}' deleted".format(username)
+    else:
+        print "Unable to find User '{}'".format(username)
+        print "Is that the correct username?"
