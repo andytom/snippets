@@ -107,13 +107,15 @@ TODO
 - [ ] Add help pages
  - [ ] What Markdown is supported
  - [ ] What queries are supported
-- [ ] Custom Validators
- - [ ] Search query
- - [x] Add user (unique username)
+ - [ ] Syntax highlighting (supported languages)
 - [ ] Groups of snippets
-- [ ] Production Deployment instructions
 - [ ] Logging
 - [ ] Add created and updated dates to Snippets
+- [ ] Custom Validators
+ - [x] Add user (unique username)
+ - [ ] Search query?
+ - [ ] Password strength estimator [zxcvbn](https://github.com/dropbox/zxcvbn)?
+- [ ] Production Deployment instructions
 - [ ] Look at testing
  - [ ] Tests for make_searchable
  - [ ] Use fixtures in tests?
